@@ -1,0 +1,26 @@
+{
+  "name": "dry",
+  "version": "1.0.0",
+  "description": "A npm wrapper that allows you to not repeat yourself",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Cosium/dry.git"
+  },
+  "keywords": [
+    "npm",
+    "package",
+    "manager",
+    "parent",
+    "extend"
+  ],
+  "author": "Cosium",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Cosium/dry/issues"
+  },
+  "homepage": "https://github.com/Cosium/dry#readme"
+}
