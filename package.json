@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Cosium/dry.git"
+    "url": "https://github.com/Cosium/dry-npm.git"
   },
   "keywords": [
     "npm",
@@ -27,9 +27,9 @@
   "author": "Cosium",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Cosium/dry/issues"
+    "url": "https://github.com/Cosium/dry-npm/issues"
   },
-  "homepage": "https://github.com/Cosium/dry#readme",
+  "homepage": "https://github.com/Cosium/dry-npm#readme",
   "devDependencies": {
     "@types/chai": "4.1.1",
     "@types/deep-diff": "0.0.31",
