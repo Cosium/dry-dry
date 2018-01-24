@@ -29,7 +29,7 @@ The parent file can be located on the system or simply inside a published npm mo
 On each `dry` command, `dry`:
 - creates a merged `package.json` based on the provided `package-dry.json`
 - runs the `npm` command
-- apply the possible `package.json` modifications made by `npm` to `package-dry.json`
+- applies the possible `package.json` modifications made by `npm` to `package-dry.json`
 - removes `package.json`
 
 `package.json` is always removed to make sure that nobody will execute a pure `npm` command in a `dry` project.
