@@ -1,4 +1,4 @@
-## DRY | Use npm across multiple projects without repeating yourself
+## Dry - Use npm across multiple projects without repeating yourself
 
 ### The copy/paste madness
 
