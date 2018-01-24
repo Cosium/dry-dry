@@ -1,5 +1,11 @@
 ## DRY - Use npm across multiple projects without repeating yourself
 
+### Get it
+
+```bash
+npm i -g dry-npm
+```
+
 ### The copy/paste madness
 
 Because companies and other groups have bunch of `package.json` attributes that are the same across all npm projects.
@@ -92,9 +98,3 @@ npm i | dry i
 npm install | dry install
 npm publish | dry publish
 npm x y z | dry x y z
-
-### Get it
-
-```bash
-npm i -g dry 
-```

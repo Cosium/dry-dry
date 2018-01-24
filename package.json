@@ -1,5 +1,5 @@
 {
-  "name": "dry",
+  "name": "dry-npm",
   "version": "0.1.0",
   "description": "Use npm across multiple projects without repeating yourself",
   "main": "dist/index.js",
