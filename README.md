@@ -93,7 +93,7 @@ package-dry.json `dry` attribute has 2 optional attributes:
 
 ### dry commands
 
-`dry` proxy all the received arguments to `npm`.
+`dry` proxies all received arguments to `npm`.
 Just take your usual npm commands and replace the word `npm` with `dry`.
 
 npm | dry
