@@ -31,7 +31,7 @@
   "bugs": {
     "url": "https://github.com/Cosium/dry-dry/issues"
   },
-  "homepage": "https://github.com/Cosium/dry-npm#readme",
+  "homepage": "https://github.com/Cosium/dry-dry#readme",
   "devDependencies": {
     "@types/chai": "4.1.1",
     "@types/deep-diff": "0.0.31",
