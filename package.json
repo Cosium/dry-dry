@@ -1,5 +1,5 @@
 {
-  "name": "dry-npm",
+  "name": "dry-dry",
   "version": "0.2.0",
   "description": "Use npm across multiple projects without repeating yourself",
   "main": "dist/index.js",
@@ -17,7 +17,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Cosium/dry-npm.git"
+    "url": "https://github.com/Cosium/dry-dry.git"
   },
   "keywords": [
     "npm",
@@ -29,7 +29,7 @@
   "author": "Cosium",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Cosium/dry-npm/issues"
+    "url": "https://github.com/Cosium/dry-dry/issues"
   },
   "homepage": "https://github.com/Cosium/dry-npm#readme",
   "devDependencies": {

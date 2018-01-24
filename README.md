@@ -3,7 +3,12 @@
 ### Get it
 
 ```bash
-npm i -g dry-npm
+npm i -g dry-dry
+```
+
+### Use it
+```bash
+dry init
 ```
 
 ### The copy/paste madness
