@@ -10,7 +10,8 @@
   ],
   "scripts": {
     "build": "rimraf ./dist && tsc",
-    "test": "mocha -r ts-node/register src/**/*.test.ts"
+    "test": "mocha -r ts-node/register src/**/*.test.ts",
+    "release": "npm run build && npm test && npm version minor && git push && git push --tags && npm publish"
   },
   "repository": {
     "type": "git",
