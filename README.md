@@ -74,7 +74,7 @@ package-dry.json
 
 To do that, `dry` introduces a file named `package-dry.json`.
 `package-dry.json` replaces `package.json` in your dry projects.
-Of course, it can contain all the attributes of `package.json` with the addition of a an attribute called `dry`.
+Of course, it can contain all the attributes of `package.json` with the addition of an attribute called `dry`.
 
 package-dry.json `dry` attribute has 2 optional attributes:
 - `extends` - The parent of the current dry package
