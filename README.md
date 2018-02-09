@@ -1,3 +1,5 @@
+[![Travis branch](https://img.shields.io/travis/Cosium/dry-dry/master.svg)](https://travis-ci.org/Cosium/dry-dry)
+
 ## DRY - Use npm across multiple projects without repeating yourself
 
 ### Get it
