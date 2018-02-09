@@ -43,8 +43,8 @@ describe('index', () => {
             }
         };
 
-        it('init -f', () => executeAndAssertSame(['init -f'], true, false));
-        it('init -f && install', () => executeAndAssertSame(['init -f', 'install'], true, true));
+        it('init -f', () => executeAndAssertSame(['init -f'], true, false)).timeout(30000);
+        it('init -f && install', () => executeAndAssertSame(['init -f', 'install'], true, true)).timeout(30000);
         it('init -f && install && pack', () => executeAndAssertSame(['init -f', 'install', 'pack'], true, true)).timeout(30000);
     });
 
