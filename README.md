@@ -1,8 +1,6 @@
 [![Build Status][travis-image]][travis-url]
 
-## DRY - Use npm across multiple projects without repeating yourself
-
-
+# DRY - Use npm across multiple projects without repeating yourself
 
 ### Get it
 
@@ -108,6 +106,5 @@ npm install | dry install
 npm publish | dry publish
 npm x y z | dry x y z
 
-https://travis-ci.org/Cosium/dry-dry
 [travis-image]: https://travis-ci.org/Cosium/dry-dry.svg?branch=master
 [travis-url]: https://travis-ci.org/Cosium/dry-dry
