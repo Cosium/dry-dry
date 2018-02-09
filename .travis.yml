@@ -1,0 +1,11 @@
+language: node_js
+node_js:
+  - "stable"
+install:
+  - npm install
+script:
+  #- npm run lint
+  #- npm test
+  # Add more here
+after_failure:
+  - "cat /home/travis/builds/Cosium/dry-dry/npm-debug.log"
