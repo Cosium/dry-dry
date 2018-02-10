@@ -6,6 +6,7 @@ install:
 script:
   - npm run build 
   - npm run lint
+  - npm run style
   - npm test
 after_failure:
   - "cat /home/travis/builds/Cosium/dry-dry/npm-debug.log"

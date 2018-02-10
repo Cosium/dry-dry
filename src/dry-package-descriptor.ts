@@ -1,4 +1,4 @@
-import {DryDependencies} from "./dry-dependencies";
+import { DryDependencies } from "./dry-dependencies";
 
 /**
  * The dry specific part of the DryPackage.

@@ -1,4 +1,4 @@
-import {DryPackageDescriptor} from "./dry-package-descriptor";
+import { DryPackageDescriptor } from "./dry-package-descriptor";
 
 /**
  * The content descriptor of the DryPackage

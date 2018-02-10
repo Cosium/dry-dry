@@ -1,19 +1,20 @@
-import {DryPackage} from "./dry-package";
 import * as fs from "fs";
-import {JsonUtils} from "./json-utils";
+
+import { DryPackage } from "./dry-package";
+import { JsonUtils } from "./json-utils";
 
 /**
  * npm 'package.json' component
  */
 export class NpmPackage {
-
     /**
      * @type {string} The location of this NpmPackage
      */
-    private readonly location = './package.json';
+    private readonly location = "./package.json";
     /**
      * The content of this NpmPackage
      */
+    // tslint:disable-next-line:no-any
     private readonly content: any;
 
     /**
@@ -21,13 +22,14 @@ export class NpmPackage {
      */
     constructor(private readonly dryPackage: DryPackage) {
         this.content = this.dryPackage.content;
-        delete this.content['dry'];
+        // tslint:disable-next-line:no-string-literal
+        delete this.content["dry"];
     }
 
     /**
      * Called before npm command proxy
      */
-    beforeNpmRun(): void {
+    public beforeNpmRun(): void {
         if (!this.dryPackage.exists()) {
             return;
         }
@@ -37,18 +39,18 @@ export class NpmPackage {
     /**
      * Called after npm command proxy
      */
-    afterNpmRun(): void {
-        let fileContent = '{}';
+    public afterNpmRun(): void {
+        let fileContent = "{}";
         try {
-            fileContent = fs.readFileSync(this.location, 'utf8');
+            fileContent = fs.readFileSync(this.location, "utf8");
         } catch (e) {
-
+            // TODO
         }
         this.dryPackage.applyDiff(this.content, JSON.parse(fileContent));
         try {
             fs.unlinkSync(this.location);
         } catch (e) {
-
+            // TODO
         }
     }
 }

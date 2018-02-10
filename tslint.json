@@ -36,14 +36,6 @@
         ],
         "no-implicit-dependencies": false,
         "no-submodule-imports": false,
-        "quotemark": [
-            true,
-            "single"
-        ],
-        "arrow-parens": [
-            true, 
-            "ban-single-arg-parens"
-        ],
         "interface-name": false
     }
 }
