@@ -43,6 +43,7 @@
         "arrow-parens": [
             true, 
             "ban-single-arg-parens"
-        ]
+        ],
+        "interface-name": false
     }
 }
