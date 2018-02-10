@@ -9,15 +9,13 @@ export class Cli {
     /**
      * @param {NodeJS.Process} process The main process
      */
-    private constructor(private readonly process: Process) {
-
-    }
+    private constructor(private readonly process: Process) {}
 
     /**
      * @param {NodeJS.Process} process The main process
      * @return {Cli} A new command line interface
      */
-    static of(process: Process): Cli {
+    public static of(process: Process): Cli {
         return new Cli(process);
     }
 
@@ -26,7 +24,7 @@ export class Cli {
      * @param {string} commandLine The command line to execute
      * @return {Promise<void>} A resolved promise in case of success, rejected in case of failure
      */
-    execute(commandLine: string): Promise<void> {
+    public execute(commandLine: string): Promise<void> {
         return new Promise((resolve, reject) => {
             const child = childProcess.exec(commandLine, (error: Error | null) => {
                 if (error) {
@@ -38,6 +36,6 @@ export class Cli {
             child.stderr.pipe(this.process.stderr);
             child.stdout.pipe(this.process.stdout);
             this.process.stdin.pipe(child.stdin);
-        })
+        });
     }
 }
