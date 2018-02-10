@@ -1,10 +1,11 @@
-import * as deepDiff from "deep-diff";
-import * as merge from "deepmerge";
-import * as fs from "fs";
-import { DependencyResolver } from "./dependency-resolver";
-import { DryPackageContent } from "./dry-package-content";
-import { JsonUtils } from "./json-utils";
-import { NpmPackage } from "./npm-package";
+import * as deepDiff from 'deep-diff';
+import * as merge from 'deepmerge';
+import * as fs from 'fs';
+
+import { DependencyResolver } from './dependency-resolver';
+import { DryPackageContent } from './dry-package-content';
+import { JsonUtils } from './json-utils';
+import { NpmPackage } from './npm-package';
 
 // TODO: consider adding a type to 'any'
 // tslint:disable-next-line:no-any
@@ -16,10 +17,10 @@ export type WeakDryPackageContent = DryPackageContent & any;
  */
 export class DryPackage {
     public static readFromDisk(dependencyResolver: DependencyResolver): DryPackage {
-        const location = "./" + DryPackage.PACKAGE_DRY_JSON;
-        let fileContent = "{}";
+        const location = './' + DryPackage.PACKAGE_DRY_JSON;
+        let fileContent = '{}';
         try {
-            fileContent = fs.readFileSync(location, "utf8");
+            fileContent = fs.readFileSync(location, 'utf8');
         } catch (e) {
             // TODO: Bad practice to silence exception
         }
@@ -27,7 +28,7 @@ export class DryPackage {
         return new DryPackage(dependencyResolver, location, baseDryPackage);
     }
 
-    private static readonly PACKAGE_DRY_JSON = "package-dry.json";
+    private static readonly PACKAGE_DRY_JSON = 'package-dry.json';
 
     private constructor(
         private readonly dependencyResolver: DependencyResolver,

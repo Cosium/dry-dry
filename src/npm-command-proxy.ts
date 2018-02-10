@@ -1,4 +1,4 @@
-import { Cli } from "./cli";
+import { Cli } from './cli';
 import Process = NodeJS.Process;
 
 /**
@@ -20,6 +20,6 @@ export class NpmCommandProxy {
      * @return {Promise<void>} Resolved promise on success, rejected promise on failure.
      */
     public proxy(): Promise<void> {
-        return this.cli.execute(`npm ${this.rawArgs.join(" ")}`);
+        return this.cli.execute(`npm ${this.rawArgs.join(' ')}`);
     }
 }

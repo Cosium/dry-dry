@@ -1,4 +1,4 @@
-import * as childProcess from "child_process";
+import * as childProcess from 'child_process';
 import Process = NodeJS.Process;
 
 /**

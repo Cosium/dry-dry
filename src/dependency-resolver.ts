@@ -1,5 +1,5 @@
-import { Cli } from "./cli";
-import { DryDependencies } from "./dry-dependencies";
+import { Cli } from './cli';
+import { DryDependencies } from './dry-dependencies';
 
 /**
  * Resolves dry dependencies
@@ -20,12 +20,12 @@ export class DependencyResolver {
         const args: string[] = [];
         Object.keys(dependencies).forEach((dependencyName) => {
             const dependencyVersion = dependencies[dependencyName];
-            if (dependencyVersion && dependencyVersion.indexOf(":") !== 1) {
+            if (dependencyVersion && dependencyVersion.indexOf(':') !== 1) {
                 args.push(dependencyVersion);
             } else {
                 let arg = dependencyName;
                 if (dependencyVersion) {
-                    arg += "@" + dependencyVersion;
+                    arg += '@' + dependencyVersion;
                 }
                 args.push(arg);
             }
@@ -33,6 +33,6 @@ export class DependencyResolver {
         if (args.length === 0) {
             return Promise.resolve();
         }
-        return this.cli.execute("npm install --no-save " + args.join(" "));
+        return this.cli.execute('npm install --no-save ' + args.join(' '));
     }
 }

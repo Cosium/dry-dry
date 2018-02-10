@@ -8,6 +8,6 @@ export class JsonUtils {
      * @return {string} Pretty stringifies JSON
      */
     public static prettyStringify(obj: object): string {
-        return JSON.stringify(obj, null, 2) + "\n";
+        return JSON.stringify(obj, null, 2) + '\n';
     }
 }

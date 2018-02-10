@@ -1,7 +1,7 @@
-import * as fs from "fs";
+import * as fs from 'fs';
 
-import { DryPackage } from "./dry-package";
-import { JsonUtils } from "./json-utils";
+import { DryPackage } from './dry-package';
+import { JsonUtils } from './json-utils';
 
 /**
  * npm 'package.json' component
@@ -10,7 +10,7 @@ export class NpmPackage {
     /**
      * @type {string} The location of this NpmPackage
      */
-    private readonly location = "./package.json";
+    private readonly location = './package.json';
     /**
      * The content of this NpmPackage
      */
@@ -23,7 +23,7 @@ export class NpmPackage {
     constructor(private readonly dryPackage: DryPackage) {
         this.content = this.dryPackage.content;
         // tslint:disable-next-line:no-string-literal
-        delete this.content["dry"];
+        delete this.content['dry'];
     }
 
     /**
@@ -40,9 +40,9 @@ export class NpmPackage {
      * Called after npm command proxy
      */
     public afterNpmRun(): void {
-        let fileContent = "{}";
+        let fileContent = '{}';
         try {
-            fileContent = fs.readFileSync(this.location, "utf8");
+            fileContent = fs.readFileSync(this.location, 'utf8');
         } catch (e) {
             // TODO
         }

@@ -1,8 +1,8 @@
 #!/usr/bin/env node
-import { Cli } from "./cli";
-import { DependencyResolver } from "./dependency-resolver";
-import { DryPackage } from "./dry-package";
-import { NpmCommandProxy } from "./npm-command-proxy";
+import { Cli } from './cli';
+import { DependencyResolver } from './dependency-resolver';
+import { DryPackage } from './dry-package';
+import { NpmCommandProxy } from './npm-command-proxy';
 
 const cli = Cli.of(process);
 const npmCommandProxy = new NpmCommandProxy(cli, process);
