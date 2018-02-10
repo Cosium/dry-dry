@@ -16,6 +16,15 @@ export type WeakDryPackageContent = DryPackageContent & any;
  * A dry package is an npm package added of a DryPackageDescriptor.
  */
 export class DryPackage {
+    private static readonly PACKAGE_DRY_JSON = 'package-dry.json';
+
+    private constructor(
+        private readonly dependencyResolver: DependencyResolver,
+        private readonly location: string,
+        // tslint:disable-next-line:variable-name
+        private _content: WeakDryPackageContent,
+    ) {}
+
     public static readFromDisk(dependencyResolver: DependencyResolver): DryPackage {
         const location = './' + DryPackage.PACKAGE_DRY_JSON;
         let fileContent = '{}';
@@ -27,15 +36,6 @@ export class DryPackage {
         const baseDryPackage = JSON.parse(fileContent);
         return new DryPackage(dependencyResolver, location, baseDryPackage);
     }
-
-    private static readonly PACKAGE_DRY_JSON = 'package-dry.json';
-
-    private constructor(
-        private readonly dependencyResolver: DependencyResolver,
-        private readonly location: string,
-        // tslint:disable-next-line:variable-name
-        private _content: WeakDryPackageContent,
-    ) {}
 
     public applyDiff(oldContent: WeakDryPackageContent, newContent: WeakDryPackageContent): void {
         const diffs = deepDiff.diff(oldContent, newContent);

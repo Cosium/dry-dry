@@ -40,6 +40,12 @@
         "quotemark": [
             true,
             "single"
+        ],
+        "member-ordering": [
+            true,
+            {
+                "order": "fields-first"
+            }
         ]
     }
 }

@@ -8,16 +8,16 @@ import Process = NodeJS.Process;
 export class Cli {
     /**
      * @param {NodeJS.Process} process The main process
+     */
+    private constructor(private readonly process: Process) {}
+
+    /**
+     * @param {NodeJS.Process} process The main process
      * @return {Cli} A new command line interface
      */
     public static of(process: Process): Cli {
         return new Cli(process);
     }
-
-    /**
-     * @param {NodeJS.Process} process The main process
-     */
-    private constructor(private readonly process: Process) {}
 
     /**
      * Executes the provided command line on the system
