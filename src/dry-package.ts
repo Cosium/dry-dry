@@ -117,11 +117,11 @@ export class DryPackage {
      * This method will resolve inherited version of dependencies
      * and then delete provided version configuration properties
      */
-    private resolveInheritedDependencies():void {
+    private resolveInheritedDependencies(): void {
         let dependencies = this._content.dependencies;
         let dependenciesMgmt = this._content.dependenciesManagement;
         this.resolveInheritance(dependencies, dependenciesMgmt);
-        
+
         dependencies = this._content.devDependencies;
         dependenciesMgmt = this._content.devDependenciesManagement;
         this.resolveInheritance(dependencies, dependenciesMgmt);
@@ -137,19 +137,21 @@ export class DryPackage {
      * @param {any} dependencies object containing a list of key/value
      * @param {any} dependenciesManagement object containing a list of key/value
      */
-    private resolveInheritance(dependencies:any, dependenciesManagement:any):void {
+    private resolveInheritance(dependencies: any, dependenciesManagement: any): void {
         if (dependencies && dependenciesManagement){
             for (let key in dependencies){
-                let inherit = "inherit".toUpperCase() === dependencies[key].toUpperCase();
-                if (inherit){
-                    let inheritedVersion = dependenciesManagement[key];
+                if (dependencies.hasOwnProperty(key)) {
+                    let inherit = "inherit".toUpperCase() === dependencies[key].toUpperCase();
+                    if (inherit){
+                        let inheritedVersion = dependenciesManagement[key];
 
-                    if (inheritedVersion){
-                        dependencies[key] = inheritedVersion;
-                    } else {
-                        let message = "Package " + key + " must inherit a version but none are provided!";
-                        console.error(message);
-                        throw message;
+                        if (inheritedVersion){
+                            dependencies[key] = inheritedVersion;
+                        } else {
+                            let message = "Package " + key + " must inherit a version but none are provided!";
+                            console.error(message);
+                            throw message;
+                        }
                     }
                 }
             }
