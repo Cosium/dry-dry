@@ -149,12 +149,6 @@ export class DryPackage {
                     throw new Error(`Package ${key} must inherit a version but none are provided!`);
                 }
             });
-                        let message = "Package " + key + " must inherit a version but none are provided!";
-                        console.error(message);
-                        throw message;
-                    }
-                }
-            }
         }
     }
 }
