@@ -88,6 +88,7 @@ export class DryPackage {
                 while (collectedPackages.length > 0) {
                     mergedPackage.merge(collectedPackages.pop());
                 }
+                mergedPackage.resolveInheritedDependencies();
                 return new NpmPackage(mergedPackage);
             }
         });
@@ -110,5 +111,48 @@ export class DryPackage {
 
     public get content(): WeakDryPackageContent {
         return JSON.parse(JSON.stringify(this._content));
+    }
+
+    /**
+     * This method will resolve inherited version of dependencies
+     * and then delete provided version configuration properties
+     */
+    private resolveInheritedDependencies():void {
+        let dependencies = this._content.dependencies;
+        let dependenciesMgmt = this._content.dependenciesManagement;
+        this.resolveInheritance(dependencies, dependenciesMgmt);
+        
+        dependencies = this._content.devDependencies;
+        dependenciesMgmt = this._content.devDependenciesManagement;
+        this.resolveInheritance(dependencies, dependenciesMgmt);
+
+        delete this._content.dependenciesManagement;
+        delete this._content.devDependenciesManagement;
+    }
+
+    /**
+     * This method will replace any value equals to "inherit" provided
+     * in dependencies parameter by the value of the same key provided 
+     * in dependenciesManagement parameter
+     * @param {any} dependencies object containing a list of key/value
+     * @param {any} dependenciesManagement object containing a list of key/value
+     */
+    private resolveInheritance(dependencies:any, dependenciesManagement:any):void {
+        if (dependencies && dependenciesManagement){
+            for (let key in dependencies){
+                let inherit = "inherit".toUpperCase() === dependencies[key].toUpperCase();
+                if (inherit){
+                    let inheritedVersion = dependenciesManagement[key];
+
+                    if (inheritedVersion){
+                        dependencies[key] = inheritedVersion;
+                    } else {
+                        let message = "Package " + key + " must inherit a version but none are provided!";
+                        console.error(message);
+                        throw message;
+                    }
+                }
+            }
+        }
     }
 }

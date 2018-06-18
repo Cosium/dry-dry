@@ -23,6 +23,13 @@ This is wrong !
 
 We believe that those attributes should be easily distributed and updated across projects.
 
+### The version management madness
+
+Because most of multi module project use multiple version of the same dependencies.
+Bundling an application with those modules may be challenging.
+
+Dry provide a mecanism to centralize dependencies version management.
+
 ### Do not repeat yourself
 
 `dry` is a stupid `npm` wrapper allowing any `package.json` to extend a parent file.
@@ -59,7 +66,15 @@ package-dry.json
     },
     "keywords": [],
     "author": "",
-    "license": "ISC"
+    "license": "ISC",
+    "dependenciesManagement": {
+        "dependency-one": "1.0.0",
+        "dependency-two": "2.0.0"
+    },
+    "devDependenciesManagement": {
+        "dev-dependency-one": "1.1.0",
+        "dev-dependency-two": "2.2.0"
+    }
 }
 ```
 
@@ -84,6 +99,14 @@ package-dry.json
         "dependencies": {
             "parent": "1.0.0"
         }
+    },
+    "dependencies": {
+        "dependency-one": "inherit",
+        "dependency-three": "1.2.3"
+    },
+    "devDependencies": {
+        "dev-dependency-two": "inherit",
+        "dev-dependency-three": "1.2.3"
     }
 }
 ```

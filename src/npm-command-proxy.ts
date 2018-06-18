@@ -9,10 +9,10 @@ export class NpmCommandProxy {
 
     /**
      * @param {Cli} cli The CLI to use
-     * @param {NodeJS.Process} process The main process
+     * @param {string[]} args the arguments
      */
-    constructor(private readonly cli: Cli, process: Process) {
-        this.rawArgs = process.argv.slice(2);
+    constructor(private readonly cli: Cli, args: string[]) {
+        this.rawArgs = args;
     }
 
     /**
