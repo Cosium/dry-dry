@@ -150,12 +150,12 @@ describe('index', () => {
             const parentDryPackage = readJson(path.resolve(`${parentProject}/package-dry.json`));
             
             parentDryPackage.dependenciesManagement = {
-                "dfirst": "parentValue",
-                "dsecond": "parentValue"
+                'dfirst': 'parentValue',
+                'dsecond': 'parentValue'
               };
             parentDryPackage.devDependenciesManagement = {
-                "ddfirst": "parentValue",
-                "ddsecond": "parentValue"
+                'ddfirst': 'parentValue',
+                'ddsecond': 'parentValue'
               };
 
             writeJson(`${parentProject}/package-dry.json`, parentDryPackage);
@@ -175,12 +175,12 @@ describe('index', () => {
 
             const classicNpmPackage:any = childDryPackage;
             classicNpmPackage.dependencies = {
-                "dfirst": "inherit",
-                "dsecond": "childValue"
+                'dfirst': 'inherit',
+                'dsecond': 'childValue'
             };
             classicNpmPackage.devDependencies = {
-                "ddfirst": "inherit",
-                "ddsecond": "childValue"
+                'ddfirst': 'inherit',
+                'ddsecond': 'childValue'
             };
 
             writeJson(`${childProject}/package-dry.json`, classicNpmPackage);
