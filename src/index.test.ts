@@ -142,7 +142,7 @@ describe('index', () => {
             expect(fs.existsSync(`${childProject}/package.json`)).to.be.false;
         }).timeout(30000);
 
-        it('inherits version for dependencies and devDependencies script when foo is defined in dry package parent', () => {
+        it('inherits version for dependencies and devDependencies script when version is defined in dry package parent', () => {
             // Build parent
             const parentProject = path.resolve(`${testDir}/parent`);
             mkdirIfNotExist(parentProject);
