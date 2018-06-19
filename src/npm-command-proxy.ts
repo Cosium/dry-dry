@@ -1,5 +1,4 @@
 import { Cli } from './cli';
-import Process = NodeJS.Process;
 
 /**
  * Responsible for the requested npm command propagation

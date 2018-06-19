@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 import { Cli } from './cli';
 import { DependencyResolver } from './dependency-resolver';
-import { DryPackage } from './dry-package';
 import { DryCommandInterceptor } from './dry-command-interceptor';
+import { DryPackage } from './dry-package';
 
 const cli = Cli.of(process);
 const dryCommandInterceptor = new DryCommandInterceptor(cli, process);
