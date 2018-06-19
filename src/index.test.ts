@@ -173,7 +173,7 @@ describe('index', () => {
                 },
             };
 
-            const classicNpmPackage:any = childDryPackage;
+            const classicNpmPackage: any = childDryPackage;
             classicNpmPackage.dependencies = {
                 dfirst: 'inherit',
                 dsecond: 'childValue',
@@ -193,10 +193,10 @@ describe('index', () => {
             const dependencies = packageJson.dependencies;
             const devDependencies = packageJson.devDependencies;
 
-            expect(dependencies['dfirst']).to.be.equals('parentValue');
-            expect(dependencies['dsecond']).to.be.equals('childValue');
-            expect(devDependencies['ddfirst']).to.be.equals('parentValue');
-            expect(devDependencies['ddsecond']).to.be.equals('childValue');
+            expect(dependencies.dfirst).to.be.equals('parentValue');
+            expect(dependencies.dsecond).to.be.equals('childValue');
+            expect(devDependencies.ddfirst).to.be.equals('parentValue');
+            expect(devDependencies.ddsecond).to.be.equals('childValue');
 
             fs.unlinkSync(`${childProject}/package-save.json`);
             expect(fs.existsSync(`${childProject}/package.json`)).to.be.false;
