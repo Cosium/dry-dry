@@ -148,14 +148,14 @@ describe('index', () => {
             mkdirIfNotExist(parentProject);
             childProcess.execSync(`node ${dryIndexJs} init -f`, { cwd: parentProject });
             const parentDryPackage = readJson(path.resolve(`${parentProject}/package-dry.json`));
-            
+
             parentDryPackage.dependenciesManagement = {
-                'dfirst': 'parentValue',
-                'dsecond': 'parentValue'
+                dfirst: 'parentValue',
+                dsecond: 'parentValue',
               };
             parentDryPackage.devDependenciesManagement = {
-                'ddfirst': 'parentValue',
-                'ddsecond': 'parentValue'
+                ddfirst: 'parentValue',
+                ddsecond: 'parentValue',
               };
 
             writeJson(`${parentProject}/package-dry.json`, parentDryPackage);
@@ -175,28 +175,28 @@ describe('index', () => {
 
             const classicNpmPackage:any = childDryPackage;
             classicNpmPackage.dependencies = {
-                'dfirst': 'inherit',
-                'dsecond': 'childValue'
+                dfirst: 'inherit',
+                dsecond: 'childValue',
             };
             classicNpmPackage.devDependencies = {
-                'ddfirst': 'inherit',
-                'ddsecond': 'childValue'
+                ddfirst: 'inherit',
+                ddsecond: 'childValue',
             };
 
             writeJson(`${childProject}/package-dry.json`, classicNpmPackage);
 
             // Run the script
             childProcess.execSync(`node ${dryIndexJs} saveTo ${childProject}/package-save.json`, { cwd: childProject });
-            
-            let packageJson:any = readJson(`${childProject}/package-save.json`);
 
-            let dependencies = packageJson.dependencies;
-            let devDependencies = packageJson.devDependencies;
+            const packageJson: any = readJson(`${childProject}/package-save.json`);
 
-            expect(dependencies['dfirst']).to.be.equals("parentValue");
-            expect(dependencies['dsecond']).to.be.equals("childValue");
-            expect(devDependencies['ddfirst']).to.be.equals("parentValue");
-            expect(devDependencies['ddsecond']).to.be.equals("childValue");
+            const dependencies = packageJson.dependencies;
+            const devDependencies = packageJson.devDependencies;
+
+            expect(dependencies['dfirst']).to.be.equals('parentValue');
+            expect(dependencies['dsecond']).to.be.equals('childValue');
+            expect(devDependencies['ddfirst']).to.be.equals('parentValue');
+            expect(devDependencies['ddsecond']).to.be.equals('childValue');
 
             fs.unlinkSync(`${childProject}/package-save.json`);
             expect(fs.existsSync(`${childProject}/package.json`)).to.be.false;
