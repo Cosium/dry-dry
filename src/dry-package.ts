@@ -138,17 +138,18 @@ export class DryPackage {
      * @param {any} dependenciesManagement object containing a list of key/value
      */
     private resolveInheritance(dependencies: any, dependenciesManagement: any): void {
-        if (dependencies && dependenciesManagement){
-            for (let key in dependencies){
+        if (dependencies && dependenciesManagement) {
+            for (let key in dependencies) {
                 if (dependencies.hasOwnProperty(key)) {
-                    let inherit = "inherit".toUpperCase() === dependencies[key].toUpperCase();
-                    if (inherit){
+                    let inherit = 'inherit'.toUpperCase() === dependencies[key].toUpperCase();
+                    if (inherit) {
                         let inheritedVersion = dependenciesManagement[key];
 
-                        if (inheritedVersion){
+                        if (inheritedVersion) {
                             dependencies[key] = inheritedVersion;
                         } else {
-                            let message = "Package " + key + " must inherit a version but none are provided!";
+                            const message = 'Package ' + key + ' must inherit a version but none are provided!';
+                            /*eslint no-console: ["error", { allow: ["warn", "error"] }] */
                             console.error(message);
                             throw message;
                         }
