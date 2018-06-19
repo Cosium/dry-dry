@@ -149,7 +149,6 @@ export class DryPackage {
                             dependencies[key] = inheritedVersion;
                         } else {
                             const message = 'Package ' + key + ' must inherit a version but none are provided!';
-                            console.log(message);
                             throw message;
                         }
                     }
