@@ -132,18 +132,18 @@ export class DryPackage {
 
     /**
      * This method will replace any value equals to "inherit" provided
-     * in dependencies parameter by the value of the same key provided 
+     * in dependencies parameter by the value of the same key provided
      * in dependenciesManagement parameter
      * @param {any} dependencies object containing a list of key/value
      * @param {any} dependenciesManagement object containing a list of key/value
      */
     private resolveInheritance(dependencies: any, dependenciesManagement: any): void {
         if (dependencies && dependenciesManagement) {
-            for (let key in dependencies) {
+            for (const key in dependencies) {
                 if (dependencies.hasOwnProperty(key)) {
-                    let inherit = 'inherit'.toUpperCase() === dependencies[key].toUpperCase();
+                    const inherit = 'inherit'.toUpperCase() === dependencies[key].toUpperCase();
                     if (inherit) {
-                        let inheritedVersion = dependenciesManagement[key];
+                        const inheritedVersion = dependenciesManagement[key];
 
                         if (inheritedVersion) {
                             dependencies[key] = inheritedVersion;
