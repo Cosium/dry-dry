@@ -88,6 +88,24 @@ package-dry.json
 }
 ```
 
+Merged package.json
+
+```json
+{
+  "name": "child",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "foo": "npm help"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
+```
+
 ### package-dry.json
 
 To do that, `dry` introduces a file named `package-dry.json`.
