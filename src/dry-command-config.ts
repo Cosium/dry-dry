@@ -84,3 +84,28 @@ export class DryCommandConfig {
         }
     }
 }
+                }
+                case DryOption.SavePackageJsonTo : {
+                    const arg = unprocessedArgs.shift();
+                    this.savePackageJson = true;
+                    this.savePackageJsonToTarget = arg;
+                    break;
+                }
+                case DryOption.LogLevel : {
+                    unprocessedArgs.shift();
+                    this.debugEnabled = true;
+                    break;
+                }
+                case DryOption.Verbose :
+                case DryOption.LogD :
+                case DryOption.LogDD :
+                case DryOption.LogDDD :
+                    this.debugEnabled = true;
+                    break;
+                default: {
+                    this.commandProxyArgs.push(currentArg);
+                }
+            }
+        }
+    }
+}

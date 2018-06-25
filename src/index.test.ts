@@ -146,25 +146,23 @@ describe('index', () => {
             // Build parent
             const parentProject = path.resolve(`${testDir}/parent`);
             mkdirIfNotExist(parentProject);
-            childProcess.execSync(`node ${dryIndexJs} init -f`, { cwd: parentProject });
+            childProcess.execSync(`node ${dryIndexJs} init -f`, { cwd: parentProject, stdio: childProcessStdio });
             const parentDryPackage = readJson(path.resolve(`${parentProject}/package-dry.json`));
 
-            parentDryPackage.dependenciesManagement = {
+            parentDryPackage.dependencyManagement = {
                 dfirst: 'parentValue',
                 dsecond: 'parentValue',
-              };
-            parentDryPackage.devDependenciesManagement = {
                 ddfirst: 'parentValue',
                 ddsecond: 'parentValue',
-              };
+            };
 
             writeJson(`${parentProject}/package-dry.json`, parentDryPackage);
-            childProcess.execSync(`node ${dryIndexJs} pack`, { cwd: parentProject });
+            childProcess.execSync(`node ${dryIndexJs} pack`, { cwd: parentProject, stdio: childProcessStdio });
 
             // Build child
             const childProject = path.resolve(`${testDir}/child`);
             mkdirIfNotExist(childProject);
-            childProcess.execSync(`node ${dryIndexJs} init -f`, { cwd: childProject });
+            childProcess.execSync(`node ${dryIndexJs} init -f`, { cwd: childProject, stdio: childProcessStdio });
             const childDryPackage: DryPackageContent = readJson(path.resolve(`${childProject}/package-dry.json`));
             childDryPackage.dry = {
                 extends: 'parent/package-dry.json',
@@ -175,20 +173,20 @@ describe('index', () => {
 
             const classicNpmPackage: any = childDryPackage;
             classicNpmPackage.dependencies = {
-                dfirst: 'inherit',
+                dfirst: 'managed',
                 dsecond: 'childValue',
             };
             classicNpmPackage.devDependencies = {
-                ddfirst: 'inherit',
+                ddfirst: 'managed',
                 ddsecond: 'childValue',
             };
 
             writeJson(`${childProject}/package-dry.json`, classicNpmPackage);
 
             // Run the script
-            childProcess.execSync(`node ${dryIndexJs} saveTo ${childProject}/package-save.json`, { cwd: childProject });
+            childProcess.execSync(`node ${dryIndexJs} --dry-keep-package-json`, { cwd: childProject, stdio: childProcessStdio });
 
-            const packageJson: any = readJson(`${childProject}/package-save.json`);
+            const packageJson: any = readJson(`${childProject}/package.json`);
 
             const dependencies = packageJson.dependencies;
             const devDependencies = packageJson.devDependencies;
@@ -198,7 +196,9 @@ describe('index', () => {
             expect(devDependencies.ddfirst).to.be.equals('parentValue');
             expect(devDependencies.ddsecond).to.be.equals('childValue');
 
-            fs.unlinkSync(`${childProject}/package-save.json`);
+            expect(fs.existsSync(`${childProject}/package.json`)).to.be.true;
+
+            fs.unlinkSync(`${childProject}/package.json`);
             expect(fs.existsSync(`${childProject}/package.json`)).to.be.false;
 
         }).timeout(30000);
