@@ -67,11 +67,9 @@ package-dry.json
     "keywords": [],
     "author": "",
     "license": "ISC",
-    "dependenciesManagement": {
+    "dependencyManagement": {
         "dependency-one": "1.0.0",
-        "dependency-two": "2.0.0"
-    },
-    "devDependenciesManagement": {
+        "dependency-two": "2.0.0",
         "dev-dependency-one": "1.1.0",
         "dev-dependency-two": "2.2.0"
     }
@@ -101,11 +99,11 @@ package-dry.json
         }
     },
     "dependencies": {
-        "dependency-one": "inherit",
+        "dependency-one": "managed",
         "dependency-three": "1.2.3"
     },
     "devDependencies": {
-        "dev-dependency-two": "inherit",
+        "dev-dependency-two": "managed",
         "dev-dependency-three": "1.2.3"
     }
 }
@@ -134,6 +132,15 @@ Just take your usual npm commands and replace the word `npm` with `dry`.
 | npm install | dry install |
 | npm publish | dry publish |
 | npm x y z   | dry x y z   |
+
+#### dry commands : additionam parameters
+
+The dry command accepts some additional parameters
+
+--dry-packager `packager_cli_name` : specify the nodejs packager cli to proxy (default : `npm`)
+--dry-keep-package-json' : when provided the generated `package.json` file is not deleted
+--dry-save-package-json-to' `target_file_path` : when provided a copy of the generated `package.json` file is done to `target_file_path` location
+
 
 [travis-image]: https://travis-ci.org/Cosium/dry-dry.svg?branch=master
 [travis-url]: https://travis-ci.org/Cosium/dry-dry

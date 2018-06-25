@@ -18,6 +18,8 @@ export type WeakDryPackageContent = DryPackageContent & any;
 export class DryPackage {
     private static readonly PACKAGE_DRY_JSON = 'package-dry.json';
 
+    private static readonly MANAGED_DEPENDECY = 'MANAGED';
+
     private constructor(
         private readonly dependencyResolver: DependencyResolver,
         private readonly location: string,
@@ -119,15 +121,11 @@ export class DryPackage {
      */
     private resolveInheritedDependencies(): void {
         let dependencies = this._content.dependencies;
-        let dependenciesMgmt = this._content.dependenciesManagement;
-        this.resolveInheritance(dependencies, dependenciesMgmt);
+        const dependencyMgmt = this._content.dependencyManagement;
+        this.resolveInheritance(dependencies, dependencyMgmt);
 
         dependencies = this._content.devDependencies;
-        dependenciesMgmt = this._content.devDependenciesManagement;
-        this.resolveInheritance(dependencies, dependenciesMgmt);
-
-        delete this._content.dependenciesManagement;
-        delete this._content.devDependenciesManagement;
+        this.resolveInheritance(dependencies, dependencyMgmt);
     }
 
     /**
@@ -135,25 +133,27 @@ export class DryPackage {
      * in dependencies parameter by the value of the same key provided
      * in dependenciesManagement parameter
      * @param {any} dependencies object containing a list of key/value
-     * @param {any} dependenciesManagement object containing a list of key/value
+     * @param {any} dependencyManagement object containing a list of key/value
      */
-    private resolveInheritance(dependencies: { [s: string]: string; }, dependenciesManagement: { [s: string]: string; }): void {
-        if (dependencies && dependenciesManagement) {
-            for (const key in dependencies) {
-                if (dependencies.hasOwnProperty(key)) {
-                    const inherit = 'inherit'.toUpperCase() === dependencies[key].toUpperCase();
-                    if (inherit) {
-                        const inheritedVersion = dependenciesManagement[key];
+    private resolveInheritance(dependencies: { [s: string]: string; }, dependencyManagement: { [s: string]: string; }): void {
 
-                        if (inheritedVersion) {
-                            dependencies[key] = inheritedVersion;
-                        } else {
-                            const message = 'Package ' + key + ' must inherit a version but none are provided!';
-                            throw message;
-                        }
+        if (!dependencies || !dependencyManagement) {
+            return;
+        }
+
+        if (dependencies && dependencyManagement) {
+            Object.getOwnPropertyNames(dependencies).forEach((key) => {
+                const managed = DryPackage.MANAGED_DEPENDECY === dependencies[key].toUpperCase();
+                if (managed) {
+                    const managedVersion = dependencyManagement[key];
+
+                    if (managedVersion) {
+                        dependencies[key] = managedVersion;
+                    } else {
+                        throw new Error(`Package ${key} must inherit a version but none are provided!`);
                     }
                 }
-            }
+            });
         }
     }
 }

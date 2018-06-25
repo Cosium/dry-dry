@@ -1,17 +1,16 @@
 #!/usr/bin/env node
 import { Cli } from './cli';
 import { DependencyResolver } from './dependency-resolver';
-import { DryCommandInterceptor } from './dry-command-interceptor';
+import { DryCommandExecutor } from './dry-command-executor';
 import { DryPackage } from './dry-package';
 
 const cli = Cli.of(process);
-const dryCommandInterceptor = new DryCommandInterceptor(cli, process);
+const dryCommandExecutor = new DryCommandExecutor(cli, process);
 const dependencyResolver = new DependencyResolver(cli);
 
 DryPackage.readFromDisk(dependencyResolver)
     .buildNpmPackage()
     .then((npmPackage) => {
-        npmPackage.beforeNpmRun();
-        return dryCommandInterceptor.proxy().then(() => npmPackage.afterNpmRun());
+        return dryCommandExecutor.execute(npmPackage);
     })
     .then(() => process.exit(), () => process.exit(1));
