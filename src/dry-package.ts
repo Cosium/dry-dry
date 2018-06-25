@@ -150,7 +150,7 @@ export class DryPackage {
 
         if (dependencies && dependencyManagement) {
             Object.getOwnPropertyNames(dependencies).forEach((key) => {
-                const managed = DryPackage.MANAGED_DEPENDECY === dependencies[key].toUpperCase();
+                const managed = DryPackage.MANAGED_DEPENDENCY === dependencies[key].toUpperCase();
                 if (managed) {
                     const managedVersion = dependencyManagement[key];
 
