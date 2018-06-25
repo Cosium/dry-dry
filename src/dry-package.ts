@@ -18,7 +18,7 @@ export type WeakDryPackageContent = DryPackageContent & any;
 export class DryPackage {
     private static readonly PACKAGE_DRY_JSON = 'package-dry.json';
 
-    private static readonly MANAGED_DEPENDECY = 'MANAGED';
+    private static readonly MANAGED_DEPENDENCY = 'MANAGED';
 
     private constructor(
         private readonly dependencyResolver: DependencyResolver,
@@ -143,7 +143,7 @@ export class DryPackage {
 
         if (dependencies && dependencyManagement) {
             Object.getOwnPropertyNames(dependencies).forEach((key) => {
-                const managed = DryPackage.MANAGED_DEPENDECY === dependencies[key].toUpperCase();
+                const managed = DryPackage.MANAGED_DEPENDENCY === dependencies[key].toUpperCase();
                 if (managed) {
                     const managedVersion = dependencyManagement[key];
 
