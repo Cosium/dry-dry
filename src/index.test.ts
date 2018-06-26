@@ -10,7 +10,7 @@ import * as path from 'path';
 import { DryPackageContent } from './dry-package-content';
 
 describe('index', () => {
-    const childProcessStdio = 'inherit';
+    const childProcessStdio = 'ignore';
     const dryIndexJs = path.resolve('dist/index.js');
     const testDir = path.resolve('dist-test');
 
