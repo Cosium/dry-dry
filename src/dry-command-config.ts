@@ -16,18 +16,12 @@ enum DryOption {
  * Dry command configuration object
  */
 export class DryCommandConfig {
-
     private static readonly DEFAULT_PACKAGER_COMMAND = 'npm';
-
     private commandProxy: CommandProxy;
-
     private readonly commandProxyArgs: string[];
-
     private keepPackageJson: boolean;
-
     private savePackageJson: boolean;
     private savePackageJsonToTarget: string;
-
     private debugEnabled: boolean;
 
     /**
@@ -72,34 +66,32 @@ export class DryCommandConfig {
     private loadConfig(): void {
         const unprocessedArgs: string[] = this.rawArgs;
         while (unprocessedArgs.length > 0) {
-
             const currentArg: string = unprocessedArgs.shift();
-
             switch (currentArg) {
-                case DryOption.PackagerCommand : {
+                case DryOption.PackagerCommand: {
                     const arg = unprocessedArgs.shift();
                     this.commandProxy = new CommandProxy(this.cli, arg);
                     break;
                 }
-                case DryOption.KeepPackageJson : {
+                case DryOption.KeepPackageJson: {
                     this.keepPackageJson = true;
                     break;
                 }
-                case DryOption.SavePackageJsonTo : {
+                case DryOption.SavePackageJsonTo: {
                     const arg = unprocessedArgs.shift();
                     this.savePackageJson = true;
                     this.savePackageJsonToTarget = arg;
                     break;
                 }
-                case DryOption.LogLevel : {
+                case DryOption.LogLevel: {
                     unprocessedArgs.shift();
                     this.debugEnabled = true;
                     break;
                 }
-                case DryOption.Verbose :
-                case DryOption.LogD :
-                case DryOption.LogDD :
-                case DryOption.LogDDD :
+                case DryOption.Verbose:
+                case DryOption.LogD:
+                case DryOption.LogDD:
+                case DryOption.LogDDD:
                     this.debugEnabled = true;
                     break;
                 default: {

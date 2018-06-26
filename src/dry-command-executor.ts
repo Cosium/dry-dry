@@ -8,7 +8,6 @@ import { NpmPackage } from './npm-package';
  * Responsible for the requested dry specific command interception
  */
 export class DryCommandExecutor {
-
     private readonly rawArgs: string[];
     private readonly dryCommandConfig: DryCommandConfig;
 
@@ -26,7 +25,6 @@ export class DryCommandExecutor {
      * @return {Promise<void>} Resolved promise on success, rejected promise on failure.
      */
     public execute(npmPackage: NpmPackage): Promise<void> {
-
         const commandProxy: CommandProxy = this.dryCommandConfig.getCommandProxy();
         const commandProxyArgs: string[] = this.dryCommandConfig.getCommandProxyArgs();
         const callProxy: boolean = commandProxyArgs.length !== 0;

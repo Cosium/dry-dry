@@ -35,7 +35,9 @@ describe('index', () => {
             const withDryDir = path.resolve(`${testDir}/with-dry/foo`);
             mkdirIfNotExist(withDryDir);
             commands.forEach((command) => childProcess.execSync(`npm ${command}`, { cwd: withNpmDir, stdio: childProcessStdio }));
-            commands.forEach((command) => childProcess.execSync(`node ${dryIndexJs} ${command}`, { cwd: withDryDir, stdio: childProcessStdio }));
+            commands.forEach((command) =>
+                childProcess.execSync(`node ${dryIndexJs} ${command}`, { cwd: withDryDir, stdio: childProcessStdio }),
+            );
 
             if (packageJson) {
                 expect(deepEqual(readJson(`${withDryDir}/package-dry.json`), readJson(`${withNpmDir}/package.json`))).to.be.true;
@@ -138,7 +140,6 @@ describe('index', () => {
 
             fs.unlinkSync(`${childProject}/package.json`);
             expect(fs.existsSync(`${childProject}/package.json`)).to.be.false;
-
         }).timeout(30000);
     });
 });

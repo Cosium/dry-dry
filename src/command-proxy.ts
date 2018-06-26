@@ -4,12 +4,10 @@ import { Cli } from './cli';
  * Responsible for the requested npm command propagation
  */
 export class CommandProxy {
-
     /**
      * @param {Cli} cli The CLI to use
      */
-    constructor(private readonly cli: Cli, private readonly command: string) {
-    }
+    constructor(private readonly cli: Cli, private readonly command: string) {}
 
     /**
      * Propagate the command received by dry to npm

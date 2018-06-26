@@ -135,8 +135,7 @@ export class DryPackage {
      * @param {any} dependencies object containing a list of key/value
      * @param {any} dependencyManagement object containing a list of key/value
      */
-    private resolveInheritance(dependencies: { [s: string]: string; }, dependencyManagement: { [s: string]: string; }): void {
-
+    private resolveInheritance(dependencies: { [s: string]: string }, dependencyManagement: { [s: string]: string }): void {
         if (!dependencies || !dependencyManagement) {
             return;
         }
