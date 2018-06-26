@@ -12,7 +12,6 @@ export class DryCommandConfig {
     private keepPackageJson: boolean;
     private savePackageJson: boolean;
     private savePackageJsonToTarget: string;
-
     /**
      * @param {Cli} cli The CLI to use
      */
@@ -85,21 +84,21 @@ export class DryCommandConfig {
     }
 }
                 }
-                case DryOption.SavePackageJsonTo : {
+                case DryOption.SavePackageJsonTo: {
                     const arg = unprocessedArgs.shift();
                     this.savePackageJson = true;
                     this.savePackageJsonToTarget = arg;
                     break;
                 }
-                case DryOption.LogLevel : {
+                case DryOption.LogLevel: {
                     unprocessedArgs.shift();
                     this.debugEnabled = true;
                     break;
                 }
-                case DryOption.Verbose :
-                case DryOption.LogD :
-                case DryOption.LogDD :
-                case DryOption.LogDDD :
+                case DryOption.Verbose:
+                case DryOption.LogD:
+                case DryOption.LogDD:
+                case DryOption.LogDDD:
                     this.debugEnabled = true;
                     break;
                 default: {

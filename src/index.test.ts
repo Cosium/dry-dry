@@ -200,7 +200,6 @@ describe('index', () => {
 
             fs.unlinkSync(`${childProject}/package.json`);
             expect(fs.existsSync(`${childProject}/package.json`)).to.be.false;
-
         }).timeout(30000);
     });
 });
