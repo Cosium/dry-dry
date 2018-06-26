@@ -123,7 +123,15 @@ Merged package.json
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+     "dependency-one": "1.0.0",
+     "dependency-three": "1.2.3"
+  },
+  "devDependencies": {
+     "dev-dependency-two": "1.1.0",
+     "dev-dependency-three": "1.2.3"
+  }
 }
 ```
 
