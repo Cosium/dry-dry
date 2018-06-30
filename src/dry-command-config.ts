@@ -1,63 +1,64 @@
 import { Cli } from './cli';
-import { CommandProxy } from './command-proxy';
 
 enum DryOption {
-    PackagerCommand = '--dry-packager',
-    KeepPackageJson = '--dry-keep-package-json',
-    SavePackageJsonTo = '--dry-save-package-json-to',
-    LogLevel = '--loglevel',
-    LogD = '-d',
-    LogDD = '-dd',
-    LogDDD = '-ddd',
-    Verbose = '--verbose',
+    PACKAGER_COMMAND = '--dry-packager',
+    KEEP_PACKAGE_JSON = '--dry-keep-package-json',
+    SAVE_PACKAGE_JSON_TO = '--dry-save-package-json-to',
 }
 
 /**
  * Dry command configuration object
  */
 export class DryCommandConfig {
-    private static readonly DEFAULT_PACKAGER_COMMAND = 'npm';
-    private commandProxy: CommandProxy;
     private readonly commandProxyArgs: string[];
     private keepPackageJson: boolean;
     private savePackageJson: boolean;
     private savePackageJsonToTarget: string;
-    private debugEnabled: boolean;
 
     /**
      * @param {Cli} cli The CLI to use
      */
     constructor(private readonly cli: Cli, private readonly rawArgs: string[]) {
-        this.commandProxy = new CommandProxy(cli, DryCommandConfig.DEFAULT_PACKAGER_COMMAND);
         this.keepPackageJson = false;
         this.savePackageJson = false;
-        this.debugEnabled = false;
         this.commandProxyArgs = [];
         this.loadConfig();
     }
 
-    public getCommandProxy(): CommandProxy {
-        return this.commandProxy;
-    }
-
+    /**
+     * Contains the parameters not already handled by dry
+     * or those handled by dry but still sent to the package manager proxy command
+     * @return {string[]} the packager proxy arguments
+     */
     public getCommandProxyArgs(): string[] {
         return this.commandProxyArgs;
     }
 
+    /**
+     * Indicate if the generated package.json file is deleted when the command is finished
+     * By default 'false' but can be changed using the option --dry-keep-package-json
+     * @return {boolean} package.json is kept
+     */
     public isPackageJsonKept(): boolean {
         return this.keepPackageJson;
     }
 
+    /**
+     * Indicate if the generated package.json file is copied to a provided location when the command is finished
+     * By default no copy done but can be changed using the option --dry-save-package-json-to <copy_location>
+     * @return {boolean} package.json is copied
+     */
     public isPackageJsonCopied(): boolean {
         return this.savePackageJson;
     }
 
+    /**
+     * if the generated package.json file is copied to a provided location using --dry-save-package-json-to <copy_location>
+     * It holds the value of <copy_location>
+     * @return {string} package.json copy location
+     */
     public getPackageJsonCopyTarget(): string {
         return this.savePackageJsonToTarget;
-    }
-
-    public isDebugEnabled(): boolean {
-        return this.debugEnabled;
     }
 
     /**
@@ -68,32 +69,16 @@ export class DryCommandConfig {
         while (unprocessedArgs.length > 0) {
             const currentArg: string = unprocessedArgs.shift();
             switch (currentArg) {
-                case DryOption.PackagerCommand: {
-                    const arg = unprocessedArgs.shift();
-                    this.commandProxy = new CommandProxy(this.cli, arg);
-                    break;
-                }
-                case DryOption.KeepPackageJson: {
+                case DryOption.KEEP_PACKAGE_JSON: {
                     this.keepPackageJson = true;
                     break;
                 }
-                case DryOption.SavePackageJsonTo: {
+                case DryOption.SAVE_PACKAGE_JSON_TO: {
                     const arg = unprocessedArgs.shift();
                     this.savePackageJson = true;
                     this.savePackageJsonToTarget = arg;
                     break;
                 }
-                case DryOption.LogLevel: {
-                    unprocessedArgs.shift();
-                    this.debugEnabled = true;
-                    break;
-                }
-                case DryOption.Verbose:
-                case DryOption.LogD:
-                case DryOption.LogDD:
-                case DryOption.LogDDD:
-                    this.debugEnabled = true;
-                    break;
                 default: {
                     this.commandProxyArgs.push(currentArg);
                 }
