@@ -68,8 +68,6 @@ export class DryCommandConfig {
             switch (currentArg) {
                 case DryOption.KEEP_PACKAGE_JSON: {
                     this.keepPackageJson = true;
-                    break;
-                }
                 case DryOption.SAVE_PACKAGE_JSON_TO: {
                     const arg = unprocessedArgs.shift();
                     this.savePackageJson = true;
@@ -84,23 +82,12 @@ export class DryCommandConfig {
     }
 }
                 }
-                case DryOption.SavePackageJsonTo: {
+                case DryOption.SAVE_PACKAGE_JSON_TO: {
                     const arg = unprocessedArgs.shift();
                     this.savePackageJson = true;
                     this.savePackageJsonToTarget = arg;
                     break;
                 }
-                case DryOption.LogLevel: {
-                    unprocessedArgs.shift();
-                    this.debugEnabled = true;
-                    break;
-                }
-                case DryOption.Verbose:
-                case DryOption.LogD:
-                case DryOption.LogDD:
-                case DryOption.LogDDD:
-                    this.debugEnabled = true;
-                    break;
                 default: {
                     this.commandProxyArgs.push(currentArg);
                 }

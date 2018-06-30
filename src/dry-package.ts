@@ -148,18 +148,12 @@ export class DryPackage {
                 } else {
                     throw new Error(`Package ${key} must inherit a version but none are provided!`);
 
-        if (dependencies && dependencyManagement) {
-            Object.getOwnPropertyNames(dependencies).forEach((key) => {
-                const managed = DryPackage.MANAGED_DEPENDENCY === dependencies[key].toUpperCase();
-                if (managed) {
-                    const managedVersion = dependencyManagement[key];
-
-                    if (managedVersion) {
-                        dependencies[key] = managedVersion;
-                    } else {
-                        throw new Error(`Package ${key} must inherit a version but none are provided!`);
+                const managedVersion = dependencyManagement[key];
+                if (managedVersion) {
+                    dependencies[key] = managedVersion;
+                } else {
+                    throw new Error(`Package ${key} must inherit a version but none are provided!`);
                 }
             });
-        }
     }
 }
