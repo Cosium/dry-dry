@@ -159,11 +159,10 @@ Just take your usual npm commands and replace the word `npm` with `dry`.
 | npm publish | dry publish |
 | npm x y z   | dry x y z   |
 
-#### dry commands : additionam parameters
+#### dry commands : additional parameters
 
 The dry command accepts some additional parameters
 
---dry-packager `packager_cli_name` : specify the nodejs packager cli to proxy (default : `npm`)
 --dry-keep-package-json' : when provided the generated `package.json` file is not deleted
 --dry-save-package-json-to' `target_file_path` : when provided a copy of the generated `package.json` file is done to `target_file_path` location
 

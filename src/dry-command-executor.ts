@@ -1,7 +1,7 @@
 import Process = NodeJS.Process;
 import { Cli } from './cli';
-import { CommandProxy } from './command-proxy';
 import { DryCommandConfig } from './dry-command-config';
+import { NpmCommandProxy } from './npm-command-proxy';
 import { NpmPackage } from './npm-package';
 
 /**
@@ -15,9 +15,9 @@ export class DryCommandExecutor {
      * @param {Cli} cli The CLI to use
      * @param {NodeJS.Process} process The main process
      */
-    constructor(cli: Cli, process: Process) {
+    constructor(private readonly cli: Cli, process: Process) {
         this.rawArgs = process.argv.slice(2);
-        this.dryCommandConfig = new DryCommandConfig(cli, this.rawArgs);
+        this.dryCommandConfig = new DryCommandConfig(this.rawArgs);
     }
 
     /**
@@ -25,7 +25,7 @@ export class DryCommandExecutor {
      * @return {Promise<void>} Resolved promise on success, rejected promise on failure.
      */
     public execute(npmPackage: NpmPackage): Promise<void> {
-        const commandProxy: CommandProxy = this.dryCommandConfig.getCommandProxy();
+        const commandProxy: NpmCommandProxy = new NpmCommandProxy(this.cli);
         const commandProxyArgs: string[] = this.dryCommandConfig.getCommandProxyArgs();
         const callProxy: boolean = commandProxyArgs.length !== 0;
 

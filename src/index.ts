@@ -10,7 +10,5 @@ const dependencyResolver = new DependencyResolver(cli);
 
 DryPackage.readFromDisk(dependencyResolver)
     .buildNpmPackage()
-    .then((npmPackage) => {
-        return dryCommandExecutor.execute(npmPackage);
-    })
+    .then((npmPackage) => dryCommandExecutor.execute(npmPackage))
     .then(() => process.exit(), () => process.exit(1));

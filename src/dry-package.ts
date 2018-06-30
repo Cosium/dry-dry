@@ -90,7 +90,7 @@ export class DryPackage {
                 while (collectedPackages.length > 0) {
                     mergedPackage.merge(collectedPackages.pop());
                 }
-                mergedPackage.resolveInheritedDependencies();
+                mergedPackage.resolveManagedDependencies();
                 return new NpmPackage(mergedPackage);
             }
         });
@@ -116,43 +116,38 @@ export class DryPackage {
     }
 
     /**
-     * This method will resolve inherited version of dependencies
-     * and then delete provided version configuration properties
+     * This method will resolve managed version of dependencies
      */
-    private resolveInheritedDependencies(): void {
+    private resolveManagedDependencies(): void {
         let dependencies = this._content.dependencies;
         const dependencyMgmt = this._content.dependencyManagement;
-        this.resolveInheritance(dependencies, dependencyMgmt);
+        this.resolveManaged(dependencies, dependencyMgmt);
 
         dependencies = this._content.devDependencies;
-        this.resolveInheritance(dependencies, dependencyMgmt);
+        this.resolveManaged(dependencies, dependencyMgmt);
     }
 
     /**
-     * This method will replace any value equals to "inherit" provided
+     * This method will replace any value equals to "managed" provided
      * in dependencies parameter by the value of the same key provided
      * in dependenciesManagement parameter
      * @param {any} dependencies object containing a list of key/value
      * @param {any} dependencyManagement object containing a list of key/value
      */
-    private resolveInheritance(dependencies: { [s: string]: string }, dependencyManagement: { [s: string]: string }): void {
+    private resolveManaged(dependencies: { [s: string]: string }, dependencyManagement: { [s: string]: string }): void {
         if (!dependencies || !dependencyManagement) {
             return;
         }
 
-        if (dependencies && dependencyManagement) {
-            Object.getOwnPropertyNames(dependencies).forEach((key) => {
-                const managed = DryPackage.MANAGED_DEPENDENCY === dependencies[key].toUpperCase();
-                if (managed) {
-                    const managedVersion = dependencyManagement[key];
-
-                    if (managedVersion) {
-                        dependencies[key] = managedVersion;
-                    } else {
-                        throw new Error(`Package ${key} must inherit a version but none are provided!`);
-                    }
+        Object.getOwnPropertyNames(dependencies)
+            .filter((key) => DryPackage.MANAGED_DEPENDENCY === dependencies[key].toUpperCase())
+            .forEach((key) => {
+                const managedVersion = dependencyManagement[key];
+                if (managedVersion) {
+                    dependencies[key] = managedVersion;
+                } else {
+                    throw new Error(`Package ${key} must inherit a version but none are provided!`);
                 }
             });
-        }
     }
 }
