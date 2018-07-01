@@ -147,12 +147,6 @@ export class DryPackage {
                     dependencies[key] = managedVersion;
                 } else {
                     throw new Error(`Package ${key} must inherit a version but none are provided!`);
-
-                const managedVersion = dependencyManagement[key];
-                if (managedVersion) {
-                    dependencies[key] = managedVersion;
-                } else {
-                    throw new Error(`Package ${key} must inherit a version but none are provided!`);
                 }
             });
     }
