@@ -3,7 +3,7 @@ import { Cli } from './cli';
 /**
  * Responsible for the requested npm command propagation
  */
-export class NpmCommandProxy {
+export class CommandProxy {
     /**
      * @param {Cli} cli The CLI to use
      */
