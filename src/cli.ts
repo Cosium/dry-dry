@@ -26,9 +26,9 @@ export class Cli {
      */
     public execute(commandLine: string): Promise<void> {
         return new Promise((resolve, reject) => {
-            const child = childProcess.spawn(commandLine, [], { env: process.env, shell: true, stdio: 'inherit' });
-            child.on('error', err => reject(err));
-            child.on('close', code => code === 0 ? resolve(): reject(code));
+            const child = childProcess.spawn(commandLine, [], { env: this.process.env, shell: true, stdio: 'inherit' });
+            child.on('error', (err) => reject(err));
+            child.on('close', (code) => (code === 0 ? resolve() : reject(code)));
         });
     }
 }
