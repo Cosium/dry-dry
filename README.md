@@ -167,6 +167,7 @@ The dry command accepts some additional parameters
 --dry-save-package-json-to' `target_file_path` : when provided a copy of the generated `package.json` file is done to `target_file_path` location
 
 
+
 [travis-image]: https://travis-ci.org/Cosium/dry-dry.svg?branch=master
 [travis-url]: https://travis-ci.org/Cosium/dry-dry
 [prettier-image]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg
