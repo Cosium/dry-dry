@@ -24,22 +24,32 @@ export class NpmPackage {
         this.content = this.dryPackage.content;
         // tslint:disable-next-line:no-string-literal
         delete this.content['dry'];
+        // tslint:disable-next-line:no-string-literal
+        delete this.content['dependencyManagement'];
     }
 
     /**
-     * Called before npm command proxy
+     * Save the current NpmPackage to the default location './package.json'
      */
-    public beforeNpmRun(): void {
+    public save(): void {
+        this.saveTo(this.location);
+    }
+
+    /**
+     * Save the current NpmPackage to the provided location
+     * @param {string} location the target location
+     */
+    public saveTo(location: string): void {
         if (!this.dryPackage.exists()) {
             return;
         }
-        fs.writeFileSync(this.location, JsonUtils.prettyStringify(this.content));
+        fs.writeFileSync(location, JsonUtils.prettyStringify(this.content));
     }
 
     /**
-     * Called after npm command proxy
+     * Update the NpmPackage from the file './package.json'
      */
-    public afterNpmRun(): void {
+    public update(): void {
         let fileContent = '{}';
         try {
             fileContent = fs.readFileSync(this.location, 'utf8');
@@ -47,6 +57,12 @@ export class NpmPackage {
             // TODO
         }
         this.dryPackage.applyDiff(this.content, JSON.parse(fileContent));
+    }
+
+    /**
+     * Delete the file './package.json' representing the NpmPackage if it exists
+     */
+    public delete(): void {
         try {
             fs.unlinkSync(this.location);
         } catch (e) {
