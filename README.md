@@ -23,6 +23,13 @@ This is wrong !
 
 We believe that those attributes should be easily distributed and updated across projects.
 
+### The version management madness
+
+Because most of multi module project use multiple version of the same dependencies.
+Bundling an application with those modules may be challenging.
+
+Dry provide a mecanism to centralize dependencies version management.
+
 ### Do not repeat yourself
 
 `dry` is a stupid `npm` wrapper allowing any `package.json` to extend a parent file.
@@ -59,7 +66,13 @@ package-dry.json
     },
     "keywords": [],
     "author": "",
-    "license": "ISC"
+    "license": "ISC",
+    "dependencyManagement": {
+        "dependency-one": "1.0.0",
+        "dependency-two": "2.0.0",
+        "dev-dependency-one": "1.1.0",
+        "dev-dependency-two": "2.2.0"
+    }
 }
 ```
 
@@ -84,6 +97,14 @@ package-dry.json
         "dependencies": {
             "parent": "1.0.0"
         }
+    },
+    "dependencies": {
+        "dependency-one": "managed",
+        "dependency-three": "1.2.3"
+    },
+    "devDependencies": {
+        "dev-dependency-two": "managed",
+        "dev-dependency-three": "1.2.3"
     }
 }
 ```
@@ -102,7 +123,15 @@ Merged package.json
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+     "dependency-one": "1.0.0",
+     "dependency-three": "1.2.3"
+  },
+  "devDependencies": {
+     "dev-dependency-two": "1.1.0",
+     "dev-dependency-three": "1.2.3"
+  }
 }
 ```
 
@@ -129,6 +158,14 @@ Just take your usual npm commands and replace the word `npm` with `dry`.
 | npm install | dry install |
 | npm publish | dry publish |
 | npm x y z   | dry x y z   |
+
+#### dry commands : additional parameters
+
+The dry command accepts some additional parameters
+
+--dry-keep-package-json' : when provided the generated `package.json` file is not deleted
+--dry-save-package-json-to' `target_file_path` : when provided a copy of the generated `package.json` file is done to `target_file_path` location
+
 
 [travis-image]: https://travis-ci.org/Cosium/dry-dry.svg?branch=master
 [travis-url]: https://travis-ci.org/Cosium/dry-dry
