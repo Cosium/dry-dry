@@ -12,6 +12,7 @@ export class DryCommandConfig {
     private keepPackageJson: boolean;
     private savePackageJson: boolean;
     private savePackageJsonToTarget: string;
+
     /**
      * @param {Cli} cli The CLI to use
      */
@@ -68,19 +69,7 @@ export class DryCommandConfig {
             switch (currentArg) {
                 case DryOption.KEEP_PACKAGE_JSON: {
                     this.keepPackageJson = true;
-                case DryOption.SAVE_PACKAGE_JSON_TO: {
-                    const arg = unprocessedArgs.shift();
-                    this.savePackageJson = true;
-                    this.savePackageJsonToTarget = arg;
                     break;
-                }
-                default: {
-                    this.commandProxyArgs.push(currentArg);
-                }
-            }
-        }
-    }
-}
                 }
                 case DryOption.SAVE_PACKAGE_JSON_TO: {
                     const arg = unprocessedArgs.shift();
