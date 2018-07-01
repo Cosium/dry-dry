@@ -20,7 +20,7 @@ export class DependencyResolver {
         const args: string[] = [];
         Object.keys(dependencies).forEach((dependencyName) => {
             const dependencyVersion = dependencies[dependencyName];
-            if (dependencyVersion && dependencyVersion.indexOf(':') !== 1) {
+            if (dependencyVersion && dependencyVersion.indexOf(':') !== -1) {
                 args.push(dependencyVersion);
             } else {
                 let arg = dependencyName;
