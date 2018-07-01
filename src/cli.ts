@@ -26,16 +26,9 @@ export class Cli {
      */
     public execute(commandLine: string): Promise<void> {
         return new Promise((resolve, reject) => {
-            const child = childProcess.exec(commandLine, (error: Error | null) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    resolve();
-                }
-            });
-            child.stderr.pipe(this.process.stderr);
-            child.stdout.pipe(this.process.stdout);
-            this.process.stdin.pipe(child.stdin);
+            const child = childProcess.spawn(commandLine, [], { env: this.process.env, shell: true, stdio: 'inherit' });
+            child.on('error', (err) => reject(err));
+            child.on('close', (code) => (code === 0 ? resolve() : reject(code)));
         });
     }
 }
