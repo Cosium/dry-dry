@@ -1,7 +1,7 @@
 import * as deepDiff from 'deep-diff';
 import * as merge from 'deepmerge';
 import * as fs from 'fs';
-
+import * as requireCwd from 'import-cwd';
 import { DependencyResolver } from './dependency-resolver';
 import { DryPackageContent } from './dry-package-content';
 import { JsonUtils } from './json-utils';
@@ -105,7 +105,7 @@ export class DryPackage {
         if (dry.dependencies) {
             promise = this.dependencyResolver.resolve(dry.dependencies);
         }
-        return promise.then(() => new DryPackage(this.dependencyResolver, this.location, require(dry.extends)));
+        return promise.then(() => new DryPackage(this.dependencyResolver, this.location, requireCwd(dry.extends)));
     }
 
     public get content(): WeakDryPackageContent {
