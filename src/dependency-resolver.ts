@@ -6,7 +6,7 @@ import { Logger } from './logger';
  * Resolves dry dependencies
  */
 export class DependencyResolver {
-    private static logger: Logger = Logger.getLogger('dry-dry.DependencyResolver');
+    private static logger: Logger = Logger.getLogger('dry.DependencyResolver');
 
     /**
      * @param {Cli} cli The cli to use

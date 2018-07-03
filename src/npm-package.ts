@@ -8,7 +8,7 @@ import { Logger } from './logger';
  * npm 'package.json' component
  */
 export class NpmPackage {
-    private static logger: Logger = Logger.getLogger('dry-dry.Cli');
+    private static logger: Logger = Logger.getLogger('dry.NpmPackage');
 
     /**
      * @type {string} The location of this NpmPackage

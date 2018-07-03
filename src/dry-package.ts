@@ -21,7 +21,7 @@ export class DryPackage {
 
     private static readonly MANAGED_DEPENDENCY = 'MANAGED';
 
-    private static logger: Logger = Logger.getLogger('dry-dry.DryPackage');
+    private static logger: Logger = Logger.getLogger('dry.DryPackage');
 
     private constructor(
         private readonly dependencyResolver: DependencyResolver,

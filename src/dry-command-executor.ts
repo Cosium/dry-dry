@@ -9,7 +9,7 @@ import { NpmPackage } from './npm-package';
  * Responsible for the requested dry specific command interception
  */
 export class DryCommandExecutor {
-    private static logger: Logger = Logger.getLogger('dry-dry.Cli');
+    private static logger: Logger = Logger.getLogger('dry.DryCommandExecutor');
     private readonly rawArgs: string[];
     private readonly dryCommandConfig: DryCommandConfig;
 

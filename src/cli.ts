@@ -7,7 +7,7 @@ import { Logger } from './logger';
  * Allows to execute command lines on the system.
  */
 export class Cli {
-    private static logger: Logger = Logger.getLogger('dry-dry.Cli');
+    private static logger: Logger = Logger.getLogger('dry.Cli');
 
     /**
      * @param {NodeJS.Process} process The main process
