@@ -2,11 +2,14 @@ import * as fs from 'fs';
 
 import { DryPackage } from './dry-package';
 import { JsonUtils } from './json-utils';
+import { Logger } from './logger';
 
 /**
  * npm 'package.json' component
  */
 export class NpmPackage {
+    private static logger: Logger = Logger.getLogger('dry.NpmPackage');
+
     /**
      * @type {string} The location of this NpmPackage
      */
@@ -43,6 +46,7 @@ export class NpmPackage {
         if (!this.dryPackage.exists()) {
             return;
         }
+        NpmPackage.logger.debug(`Saving npm package to ${location}`);
         fs.writeFileSync(location, JsonUtils.prettyStringify(this.content));
     }
 
@@ -52,9 +56,10 @@ export class NpmPackage {
     public update(): void {
         let fileContent = '{}';
         try {
+            NpmPackage.logger.debug(`Updating npm package from ${this.location}`);
             fileContent = fs.readFileSync(this.location, 'utf8');
         } catch (e) {
-            // TODO
+            NpmPackage.logger.error(`Error while loading npm package from ${this.location} with exception ${e}`);
         }
         this.dryPackage.applyDiff(this.content, JSON.parse(fileContent));
     }
@@ -64,9 +69,10 @@ export class NpmPackage {
      */
     public delete(): void {
         try {
+            NpmPackage.logger.debug(`Deleting npm package from ${this.location}`);
             fs.unlinkSync(this.location);
         } catch (e) {
-            // TODO
+            NpmPackage.logger.error(`Error while deleting npm package from ${this.location} with exception ${e}`);
         }
     }
 }

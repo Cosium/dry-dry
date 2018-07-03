@@ -1,7 +1,18 @@
+import { Logger } from './logger';
+
 enum DryOption {
     PACKAGER_COMMAND = '--dry-packager',
     KEEP_PACKAGE_JSON = '--dry-keep-package-json',
     SAVE_PACKAGE_JSON_TO = '--dry-save-package-json-to',
+    LOG_LEVEL = '--loglevel',
+    Q = '-q',
+    QUIET = '--quiet',
+    D = '-d',
+    DD = '-dd',
+    DDD = '-ddd',
+    S = '-s',
+    SILENT = '--silent',
+    VERBOSE = '--verbose',
 }
 
 /**
@@ -75,6 +86,50 @@ export class DryCommandConfig {
                     const arg = unprocessedArgs.shift();
                     this.savePackageJson = true;
                     this.savePackageJsonToTarget = arg;
+                    break;
+                }
+                case DryOption.LOG_LEVEL: {
+                    let arg = unprocessedArgs.shift();
+                    Logger.setLevel(arg);
+                    this.commandProxyArgs.push(currentArg);
+                    if (arg.toUpperCase() === 'TRACE') {
+                        arg = 'silly';
+                    }
+                    if (arg.toUpperCase() === 'DEBUG') {
+                        arg = 'verbose';
+                    }
+                    if (arg.toUpperCase() === 'ERROR') {
+                        arg = 'silent';
+                    }
+                    this.commandProxyArgs.push(arg);
+                    break;
+                }
+                case DryOption.SILENT:
+                case DryOption.S: {
+                    Logger.setLevel('error');
+                    this.commandProxyArgs.push(currentArg);
+                    break;
+                }
+                case DryOption.QUIET:
+                case DryOption.Q: {
+                    Logger.setLevel('warn');
+                    this.commandProxyArgs.push(currentArg);
+                    break;
+                }
+                case DryOption.D: {
+                    Logger.setLevel('info');
+                    this.commandProxyArgs.push(currentArg);
+                    break;
+                }
+                case DryOption.VERBOSE:
+                case DryOption.DD: {
+                    Logger.setLevel('debug');
+                    this.commandProxyArgs.push(currentArg);
+                    break;
+                }
+                case DryOption.DDD: {
+                    Logger.setLevel('trace');
+                    this.commandProxyArgs.push(currentArg);
                     break;
                 }
                 default: {
