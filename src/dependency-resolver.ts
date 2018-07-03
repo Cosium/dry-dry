@@ -1,10 +1,13 @@
 import { Cli } from './cli';
 import { DryDependencies } from './dry-dependencies';
+import { Logger } from './logger';
 
 /**
  * Resolves dry dependencies
  */
 export class DependencyResolver {
+    private static logger: Logger = Logger.getLogger('dry-dry.DependencyResolver');
+
     /**
      * @param {Cli} cli The cli to use
      */
@@ -18,8 +21,13 @@ export class DependencyResolver {
      */
     public resolve(dependencies: DryDependencies): Promise<void> {
         const args: string[] = [];
+
+        DependencyResolver.logger.info('Resolving dependencies...');
+
         Object.keys(dependencies).forEach((dependencyName) => {
             const dependencyVersion = dependencies[dependencyName];
+
+            DependencyResolver.logger.debug(`Resolving name: ${dependencyName} version: ${dependencyVersion}`);
             if (dependencyVersion && dependencyVersion.indexOf(':') !== -1) {
                 args.push(dependencyVersion);
             } else {
@@ -31,8 +39,12 @@ export class DependencyResolver {
             }
         });
         if (args.length === 0) {
+            DependencyResolver.logger.info('Nothing to resolve!');
             return Promise.resolve();
         }
-        return this.cli.execute('npm install --no-save ' + args.join(' '));
+        const cmd: string = 'npm install --no-save ' + args.join(' ');
+
+        DependencyResolver.logger.debug(`Resolving with command: ${cmd}`);
+        return this.cli.execute(cmd);
     }
 }

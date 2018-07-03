@@ -1,11 +1,14 @@
 import * as childProcess from 'child_process';
 import Process = NodeJS.Process;
+import { Logger } from './logger';
 
 /**
  * The command line interface.
  * Allows to execute command lines on the system.
  */
 export class Cli {
+    private static logger: Logger = Logger.getLogger('dry-dry.Cli');
+
     /**
      * @param {NodeJS.Process} process The main process
      */
@@ -26,6 +29,7 @@ export class Cli {
      */
     public execute(commandLine: string): Promise<void> {
         return new Promise((resolve, reject) => {
+            Cli.logger.info(`Spawning process with command ${commandLine}`);
             const child = childProcess.spawn(commandLine, [], { env: this.process.env, shell: true, stdio: 'inherit' });
             child.on('error', (err) => reject(err));
             child.on('close', (code) => (code === 0 ? resolve() : reject(code)));
