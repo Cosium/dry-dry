@@ -1,8 +1,7 @@
-import Process = NodeJS.Process;
 import { Cli } from './cli';
+import { CommandProxy } from './command-proxy';
 import { DryCommandConfig } from './dry-command-config';
 import { Logger } from './logger';
-import { NpmCommandProxy } from './npm-command-proxy';
 import { NpmPackage } from './npm-package';
 
 /**
@@ -10,17 +9,12 @@ import { NpmPackage } from './npm-package';
  */
 export class DryCommandExecutor {
     private static logger: Logger = Logger.getLogger('dry.DryCommandExecutor');
-    private readonly rawArgs: string[];
-    private readonly dryCommandConfig: DryCommandConfig;
 
     /**
      * @param {Cli} cli The CLI to use
      * @param {NodeJS.Process} process The main process
      */
-    constructor(private readonly cli: Cli, process: Process) {
-        this.rawArgs = process.argv.slice(2);
-        this.dryCommandConfig = new DryCommandConfig(this.rawArgs);
-    }
+    constructor(private readonly cli: Cli, private readonly dryCommandConfig: DryCommandConfig) {}
 
     /**
      * Execute the dry command received
@@ -28,7 +22,8 @@ export class DryCommandExecutor {
      */
     public execute(npmPackage: NpmPackage): Promise<void> {
         DryCommandExecutor.logger.info('Dry command execution started');
-        const commandProxy: NpmCommandProxy = new NpmCommandProxy(this.cli);
+        const packageManager: string = this.dryCommandConfig.getPackagerDescriptor().getPackageManager();
+        const commandProxy: CommandProxy = new CommandProxy(this.cli, packageManager);
         const commandProxyArgs: string[] = this.dryCommandConfig.getCommandProxyArgs();
         const callProxy: boolean = commandProxyArgs.length !== 0;
 

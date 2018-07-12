@@ -60,4 +60,24 @@ export class Logger {
         this.innerLogger.setLevel(Logger.lvl);
         this.innerLogger.error(msg);
     }
+
+    public isTraceEnabled(): boolean {
+        return this.innerLogger.getLevel() <= loglevel.levels.TRACE;
+    }
+
+    public isDebugEnabled(): boolean {
+        return this.innerLogger.getLevel() <= loglevel.levels.DEBUG;
+    }
+
+    public isInfoEnabled(): boolean {
+        return this.innerLogger.getLevel() <= loglevel.levels.INFO;
+    }
+
+    public isWarnEnabled(): boolean {
+        return this.innerLogger.getLevel() <= loglevel.levels.WARN;
+    }
+
+    public isErrorEnabled(): boolean {
+        return this.innerLogger.getLevel() <= loglevel.levels.ERROR;
+    }
 }

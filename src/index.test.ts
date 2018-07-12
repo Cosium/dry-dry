@@ -7,12 +7,17 @@ import deepEqual = require('deep-equal');
 import * as fs from 'fs';
 import * as fsExtra from 'fs-extra';
 import * as path from 'path';
+import { DryCommandConfig } from './dry-command-config';
 import { DryPackageContent } from './dry-package-content';
+import { DryPackagerDescriptor } from './dry-packager-descriptor';
+import { JsonUtils } from './json-utils';
 
 describe('index', () => {
     const childProcessStdio = 'ignore';
     const dryIndexJs = path.resolve('dist/index.js');
     const testDir = path.resolve('dist-test');
+    const npmDescriptorFile = path.resolve('packagerDescriptorTemplates/npm.json');
+    const pnpmDescriptorFile = path.resolve('packagerDescriptorTemplates/pnpm.json');
 
     const mkdirIfNotExist = (dir: string): void => {
         if (fs.existsSync(dir)) {
@@ -23,9 +28,11 @@ describe('index', () => {
     const readJson = (file: string): any => JSON.parse(fs.readFileSync(path.resolve(file), 'utf8'));
     const writeJson = (file: string, obj: any): any => fs.writeFileSync(path.resolve(file), JSON.stringify(obj, null, 2) + '\n');
 
-    beforeEach(() => {
+    beforeEach(function(this: Mocha.IBeforeAndAfterContext): any {
+        this.timeout(10000);
         fsExtra.removeSync(testDir);
         mkdirIfNotExist(testDir);
+        return;
     });
 
     describe('dry commands match npm commands', () => {
@@ -141,5 +148,82 @@ describe('index', () => {
             fs.unlinkSync(`${childProject}/package.json`);
             expect(fs.existsSync(`${childProject}/package.json`)).to.be.false;
         }).timeout(30000);
+    });
+
+    describe('dry json config loading', () => {
+        it('npm packager definition loading', () => {
+            const npm: DryPackagerDescriptor = JsonUtils.loadObject(npmDescriptorFile, DryPackagerDescriptor);
+            expect(npm.getPackageManager()).to.be.equals('npm');
+        });
+        it('npm packager arguments simple mapping without argument value', () => {
+            const npm: DryPackagerDescriptor = JsonUtils.loadObject(npmDescriptorFile, DryPackagerDescriptor);
+
+            const arg: string = '-dd';
+            const argValue: string = undefined;
+            const inArgs: string[] = [];
+            const outArgs: string[] = [];
+            const outInstallParentArgs: string[] = [];
+            npm.mapArguments(arg, argValue, inArgs, outArgs, outInstallParentArgs);
+            expect(outArgs[0]).to.be.equals('--loglevel');
+            expect(outArgs[1]).to.be.equals('verbose');
+            expect(outArgs.length).to.be.equals(2);
+            expect(outInstallParentArgs[0]).to.be.equals('--loglevel');
+            expect(outInstallParentArgs[1]).to.be.equals('verbose');
+            expect(outInstallParentArgs.length).to.be.equals(2);
+        });
+        it('npm packager arguments simple mapping with argument', () => {
+            const npm: DryPackagerDescriptor = JsonUtils.loadObject(npmDescriptorFile, DryPackagerDescriptor);
+
+            const arg: string = '--loglevel';
+            const argValue: string = 'trace';
+            const inArgs: string[] = [];
+            const outArgs: string[] = [];
+            const outInstallParentArgs: string[] = [];
+            npm.mapArguments(arg, argValue, inArgs, outArgs, outInstallParentArgs);
+            expect(outArgs[0]).to.be.equals('--loglevel');
+            expect(outArgs[1]).to.be.equals('silly');
+            expect(outArgs.length).to.be.equals(2);
+            expect(outInstallParentArgs[0]).to.be.equals('--loglevel');
+            expect(outInstallParentArgs[1]).to.be.equals('silly');
+            expect(outInstallParentArgs.length).to.be.equals(2);
+        });
+        it('npm packager arguments simple mapping without argument value extracted', () => {
+            const npm: DryPackagerDescriptor = JsonUtils.loadObject(npmDescriptorFile, DryPackagerDescriptor);
+
+            const arg: string = '--loglevel';
+            const argValue: string = undefined;
+            const inArgs: string[] = ['trace'];
+            const outArgs: string[] = [];
+            const outInstallParentArgs: string[] = [];
+            npm.mapArguments(arg, argValue, inArgs, outArgs, outInstallParentArgs);
+            expect(outArgs[0]).to.be.equals('--loglevel');
+            expect(outArgs[1]).to.be.equals('silly');
+            expect(outArgs.length).to.be.equals(2);
+            expect(outInstallParentArgs[0]).to.be.equals('--loglevel');
+            expect(outInstallParentArgs[1]).to.be.equals('silly');
+            expect(outInstallParentArgs.length).to.be.equals(2);
+            expect(inArgs.length).to.be.equals(0);
+        });
+        it('check dry command config mapping', () => {
+            const inArgs: string[] = ['init', '-f', '-D'];
+            const cfg: DryCommandConfig = new DryCommandConfig(inArgs);
+            const outArgs: string[] = cfg.getCommandProxyArgs();
+            const outInstallParentArgs: string[] = cfg.getInstallParentCommandProxyArgs();
+
+            expect(cfg.getPackagerDescriptor().getPackageManager()).to.be.equals('npm');
+            expect(outArgs.length).to.be.equals(4);
+            expect(outArgs[0]).to.be.equals('init');
+            expect(outArgs[1]).to.be.equals('-f');
+            expect(outArgs[2]).to.be.equals('--loglevel');
+            expect(outArgs[3]).to.be.equals('info');
+            expect(outInstallParentArgs.length).to.be.equals(2);
+            expect(outInstallParentArgs[0]).to.be.equals('--loglevel');
+            expect(outInstallParentArgs[1]).to.be.equals('info');
+        });
+        it('pnpm packager definition loading', () => {
+            const pnpm: DryPackagerDescriptor = JsonUtils.loadObject(pnpmDescriptorFile, DryPackagerDescriptor);
+            expect(pnpm.getPackageManager()).to.be.equals('pnpm');
+            expect(pnpm.getMappedArguments().length).to.be.equals(6);
+        });
     });
 });

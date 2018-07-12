@@ -1,0 +1,5 @@
+{
+    "extends": "npm",
+    "packageManager": "pnpm",
+    "installParentCommandTemplate": "pnpm install --no-save {0}"
+}

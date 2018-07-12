@@ -1,0 +1,28 @@
+{
+    "packageManager": "yarn",
+    "installParentCommandTemplate": "yarn add {0}",
+    "preventPackageJsonChangeFromParentInstall": true,
+    "mappedArguments" : [
+        { 
+            "arguments": ["--loglevel"],
+            "expectSubArgument": true,
+            "allowArgInInstallParentCommand": true,
+            "mappedArgumentValues": {
+                "error": [],
+                "warn": [],
+                "info": ["--verbose"],
+                "debug": ["--verbose"],
+                "trace": ["--verbose"]
+            }
+        },
+        { 
+            "arguments": ["-s", "--silent", "-q", "--quiet"],
+            "mappedTo" : []
+        },
+        { 
+            "arguments": ["-d", "-dd", "-ddd", "--verbose"],
+            "allowArgInInstallParentCommand": true,
+            "mappedTo" : ["--verbose"]
+        }
+    ]
+}
