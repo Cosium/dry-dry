@@ -218,20 +218,11 @@ DryPackagerDescriptor
 
 | property                                  | description                                                                                           |
 | ----------------------------------------- | ----------------------------------------------------------------------------------------------------- |
-| extends                                   | string : If the package manager you plan to use is just a wrapper around another existing one. You can|                     
-|                                           |          provide his key (npm|yarn|pnpm). A relative/absolute file path is also accepted              |
-|                                           |          (Ex: [pnpm.json](packagerDescriptorTemplates/pnpm.json)                                      |
+| extends                                   | string : If the package manager you plan to use is just a wrapper around another existing one. You can provide his key (npm|yarn|pnpm). A relative/absolute file path is also accepted (Ex: [pnpm.json](packagerDescriptorTemplates/pnpm.json)                         |
 | packageManager                            | string : The package manager cli name to invoke. Must be available in PATH                            |
-| installParentCommandTemplate              | string : the command template to use to install the parent of the current dry package                 |
-|                                           | in the node_modules folder. Preferably, this command should not modify the "package.json" file        |
-|                                           | The command must contains '{0}' which will be replaced by the dependency to install                   |
-|                                           | '{0}' will be replaced by 'parent@0.0.1' or a packed file path 'file://path/to/package.tgz'           |
-|                                           |                                                                                                       |
-| preventPackageJsonChangeFromParentInstall | boolean : If the command provided in "installParentCommandTemplate" do modify the "package.json" file |
-|                                           | then turning on this boolean will restore the "package.json" file                                     |
-|                                           |                                                                                                       |
+| installParentCommandTemplate              | string : the command template to use to install the parent of the current dry package in the node_modules folder. Preferably, this command should not modify the "package.json" file. The command must contains '{0}' which will be replaced by the dependency to install.'{0}' will be replaced by 'parent@0.0.1' or a packed file path 'file://path/to/package.tgz'                                                               |
+| preventPackageJsonChangeFromParentInstall | boolean : If the command provided in "installParentCommandTemplate" do modify the "package.json" file then turning on this boolean will restore the "package.json" file                                                                                                |
 | mappedArguments                           | ArgumentMapping[]: list of mapped arguments                                                           |
-|                                           |                                                                                                       |
 
 
 ArgumentMapping
@@ -239,15 +230,10 @@ ArgumentMapping
 | property                                  | description                                                                                           |
 | ----------------------------------------- | ----------------------------------------------------------------------------------------------------- |
 | arguments                                 | string[]: Contains the list of handled arguments                                                      |
-| expectSubArgument                         | boolean : Indicate if the provided arguments expect an associated value                               |
-|                                           |           If 'false' then 'mappedTo' must be provided                                                 |
-|                                           |           If 'true' then 'mappedArgumentValues' must be provided                                      |
+| expectSubArgument                         | boolean : Indicate if the provided arguments expect an associated value. If 'false' then 'mappedTo' must be provided. If 'true' then 'mappedArgumentValues' must be provided                                                                                    |
 | allowArgInInstallParentCommand            | boolean : Indicate if the mapping result can also be added to the "installParentCommandTemplate"      |
-|                                           |                                                                                                       |
 | mappedTo                                  | string[]: The argument provided as input will be replaced by this list of argument as output          |
-| mappedArgumentValues                      | Map<string, string[]> : The argument value provided as input will be used as key for this map to get  |                                                                                                     
-|                                           |                         the map value and return the value as the list of argument to output          |
-|                                           |                                                                                                       |
+| mappedArgumentValues                      | Map<string, string[]> : The argument value provided as input will be used as key for this map to get the map value and return the value as the list of argument to output                                                                                              |
 
 
 You can check current descriptors with the links below:
