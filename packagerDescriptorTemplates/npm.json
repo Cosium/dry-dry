@@ -1,0 +1,41 @@
+{
+    "packageManager": "npm",
+    "installParentCommandTemplate": "npm install --no-save {0}",
+    "mappedArguments" : [
+        { 
+            "arguments": ["--loglevel"],
+            "expectSubArgument": true,
+            "allowArgInInstallParentCommand": true,
+            "mappedArgumentValues": {
+                "error": ["--loglevel","silent"],
+                "debug": ["--loglevel","verbose"],
+                "trace": ["--loglevel","silly"]
+            }
+        },
+        { 
+            "arguments": ["-s", "--silent"],
+            "allowArgInInstallParentCommand": true,
+            "mappedTo" : ["--loglevel","silent"]
+        },
+        { 
+            "arguments": ["-q", "--quiet"],
+            "allowArgInInstallParentCommand": true,
+            "mappedTo" : ["--loglevel","warn"]
+        },
+        { 
+            "arguments": ["-d"],
+            "allowArgInInstallParentCommand": true,
+            "mappedTo" : ["--loglevel","info"]
+        },
+        { 
+            "arguments": ["-dd","--verbose"],
+            "allowArgInInstallParentCommand": true,
+            "mappedTo" : ["--loglevel","verbose"]
+        },
+        { 
+            "arguments": ["-ddd"],
+            "allowArgInInstallParentCommand": true,
+            "mappedTo" : ["--loglevel","silly"]
+        }
+    ]
+}

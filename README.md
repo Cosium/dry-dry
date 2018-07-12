@@ -163,8 +163,98 @@ Just take your usual npm commands and replace the word `npm` with `dry`.
 
 The dry command accepts some additional parameters
 
---dry-keep-package-json' : when provided the generated `package.json` file is not deleted
---dry-save-package-json-to' `target_file_path` : when provided a copy of the generated `package.json` file is done to `target_file_path` location
+* --dry-packager `packager_cli_name` : specify the nodejs packager cli to proxy (default : `npm`, possible values: `npm|pnpm|yarn`)
+* --dry-keep-package-json' : when provided the generated `package.json` file is not deleted
+* --dry-save-package-json-to' `target_file_path` : when provided a copy of the generated `package.json` file is done to `target_file_path` location
+
+Other handled parameters:
+
+* --loglevel trace|debug|info|warn|error: log set to a specific level
+* -s, --silent: --loglevel error
+* -q, --quiet: --loglevel warn
+* -d: --loglevel info
+* -dd, --verbose: --loglevel debug
+* -ddd: --loglevel trace
+
+#### dry : using a custom package manager
+
+Dry use by default `npm` and it also allows using another package manager like `pnpm` and `yarn` trough the parameter `--dry-packager`.
+
+If you're not using one of the configured packagers or if you need to extend an existing packager then you can provide to 
+the `--dry-packager` parameter a path to a 'Package Manager Descriptor' json file.
+
+All package manager available in Dry are defined using a 'Package Manager Descriptor'.
+It provides to Dry which command it needs to execute and how to handle and map dry supported arguments
+
+    							       
+```json
+
+{
+    "extends": "",
+    "packageManager": "", 
+    "installParentCommandTemplate": "", 
+    "preventPackageJsonChangeFromParentInstall": true|false,
+    "mappedArguments" : [
+        { 
+            "arguments": [""],
+            "expectSubArgument": true|false,
+            "allowArgInInstallParentCommand": true|false,
+            "mappedArgumentValues": {
+                "": [""],
+                "": [""],
+                "": [""]
+            }
+        },
+        { 
+            "arguments": [""],
+            "allowArgInInstallParentCommand": true|false,
+            "mappedTo" : [""]
+        }
+ 	]
+}        
+```
+
+DryPackagerDescriptor
+
+| property                                  | description                                                                                           |
+| ----------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| extends                                   | string : If the package manager you plan to use is just a wrapper around another existing one. You can|                     
+|                                           |          provide his key (npm|yarn|pnpm). A relative/absolute file path is also accepted              |
+|                                           |          (Ex: [pnpm.json](packagerDescriptorTemplates/pnpm.json)                                      |
+| packageManager                            | string : The package manager cli name to invoke. Must be available in PATH                            |
+| installParentCommandTemplate              | string : the command template to use to install the parent of the current dry package                 |
+|                                           | in the node_modules folder. Preferably, this command should not modify the "package.json" file        |
+|                                           | The command must contains '{0}' which will be replaced by the dependency to install                   |
+|                                           | '{0}' will be replaced by 'parent@0.0.1' or a packed file path 'file://path/to/package.tgz'           |
+|                                           |                                                                                                       |
+| preventPackageJsonChangeFromParentInstall | boolean : If the command provided in "installParentCommandTemplate" do modify the "package.json" file |
+|                                           | then turning on this boolean will restore the "package.json" file                                     |
+|                                           |                                                                                                       |
+| mappedArguments                           | ArgumentMapping[]: list of mapped arguments                                                           |
+|                                           |                                                                                                       |
+
+
+ArgumentMapping
+
+| property                                  | description                                                                                           |
+| ----------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| arguments                                 | string[]: Contains the list of handled arguments                                                      |
+| expectSubArgument                         | boolean : Indicate if the provided arguments expect an associated value                               |
+|                                           |           If 'false' then 'mappedTo' must be provided                                                 |
+|                                           |           If 'true' then 'mappedArgumentValues' must be provided                                      |
+| allowArgInInstallParentCommand            | boolean : Indicate if the mapping result can also be added to the "installParentCommandTemplate"      |
+|                                           |                                                                                                       |
+| mappedTo                                  | string[]: The argument provided as input will be replaced by this list of argument as output          |
+| mappedArgumentValues                      | Map<string, string[]> : The argument value provided as input will be used as key for this map to get  |                                                                                                     
+|                                           |                         the map value and return the value as the list of argument to output          |
+|                                           |                                                                                                       |
+
+
+You can check current descriptors with the links below:
+
+* [npm.json](packagerDescriptorTemplates/npm.json)
+* [pnpm.json](packagerDescriptorTemplates/pnpm.json)
+* [yarn.json](packagerDescriptorTemplates/yarn.json)
 
 
 
@@ -172,3 +262,21 @@ The dry command accepts some additional parameters
 [travis-url]: https://travis-ci.org/Cosium/dry-dry
 [prettier-image]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg
 [prettier-url]: https://github.com/prettier/prettier
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -27,12 +27,22 @@ export class Cli {
      * @param {string} commandLine The command line to execute
      * @return {Promise<void>} A resolved promise in case of success, rejected in case of failure
      */
-    public execute(commandLine: string): Promise<void> {
+    public execute(commandLine: string, finallyFunc?: () => void): Promise<void> {
         return new Promise((resolve, reject) => {
             Cli.logger.info(`Spawning process with command ${commandLine}`);
             const child = childProcess.spawn(commandLine, [], { env: this.process.env, shell: true, stdio: 'inherit' });
-            child.on('error', (err) => reject(err));
-            child.on('close', (code) => (code === 0 ? resolve() : reject(code)));
+            child.on('error', (err) => {
+                if (finallyFunc !== undefined) {
+                    finallyFunc();
+                }
+                reject(err);
+            });
+            child.on('close', (code) => {
+                if (finallyFunc !== undefined) {
+                    finallyFunc();
+                }
+                code === 0 ? resolve() : reject(code);
+            });
         });
     }
 }
