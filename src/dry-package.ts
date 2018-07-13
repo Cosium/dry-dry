@@ -131,15 +131,22 @@ export class DryPackage {
      * This method will resolve managed version of dependencies
      */
     private resolveManagedDependencies(): void {
-        let dependencies = this._content.dependencies;
         const dependencyMgmt = this._content.dependencyManagement;
 
         DryPackage.logger.info(`Resolving version of "managed" dependencies...`);
-        this.resolveManaged(dependencies, dependencyMgmt);
+        this.resolveManaged(this._content.dependencies, dependencyMgmt);
 
-        dependencies = this._content.devDependencies;
         DryPackage.logger.info(`Resolving version of "managed" devDependencies...`);
-        this.resolveManaged(dependencies, dependencyMgmt);
+        this.resolveManaged(this._content.devDependencies, dependencyMgmt);
+
+        DryPackage.logger.info(`Resolving version of "managed" peerDependencies...`);
+        this.resolveManaged(this._content.peerDependencies, dependencyMgmt);
+
+        DryPackage.logger.info(`Resolving version of "managed" optionalDependencies...`);
+        this.resolveManaged(this._content.optionalDependencies, dependencyMgmt);
+
+        DryPackage.logger.info(`Resolving version of "managed" bundledDependencies...`);
+        this.resolveManaged(this._content.bundledDependencies, dependencyMgmt);
     }
 
     /**
