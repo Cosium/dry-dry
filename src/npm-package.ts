@@ -60,6 +60,7 @@ export class NpmPackage {
             fileContent = fs.readFileSync(this.location, 'utf8');
         } catch (e) {
             NpmPackage.logger.error(`Error while loading npm package from ${this.location} with exception ${e}`);
+            throw e;
         }
         this.dryPackage.applyDiff(this.content, JSON.parse(fileContent));
     }
@@ -73,6 +74,7 @@ export class NpmPackage {
             fs.unlinkSync(this.location);
         } catch (e) {
             NpmPackage.logger.error(`Error while deleting npm package from ${this.location} with exception ${e}`);
+            throw e;
         }
     }
 }

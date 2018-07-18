@@ -28,7 +28,6 @@ export class DryCommandExecutor {
         this.dryContext.getExecutionSteps().forEach((step) => {
             stepPromise = stepPromise.then((ctx) => step.exec(ctx));
         });
-
         return stepPromise;
     }
 
