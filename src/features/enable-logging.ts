@@ -8,6 +8,7 @@ import { Logger } from '../logger';
  * Dry feature responsible for enabling logging. The level is provided through the targeted dry option
  */
 export class EnableLogging extends DryFeature {
+    /** @inheritdoc */
     public constructor(phase: DryLifecyclePhase, orderInPhase: number = 100) {
         super(phase, orderInPhase);
         this.triggeredBy = [
@@ -24,6 +25,7 @@ export class EnableLogging extends DryFeature {
         this.allowMappingToProxy = true;
     }
 
+    /** @inheritdoc */
     public execute(context: DryContext): Promise<DryContext> {
         return new Promise<DryContext>((resolve, reject) => {
             switch (this.activeTrigger) {

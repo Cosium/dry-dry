@@ -8,6 +8,7 @@ import { Logger } from '../logger';
 export class Finish extends DryStep {
     private static logger: Logger = Logger.getLogger('dry.Finish');
 
+    /** @inheritdoc */
     public execute(context: DryContext): Promise<DryContext> {
         return new Promise<DryContext>((resolve, reject) => {
             Finish.logger.info('All steps executed successfully');

@@ -7,6 +7,7 @@ import { DryStep } from '../dry-step';
  * Dry step responsible for executing the proxified package manager call
  */
 export class ExecuteProxy extends DryStep {
+    /** @inheritdoc */
     public execute(context: DryContext): Promise<DryContext> {
         return new Promise<DryContext>((resolve, reject) => {
             const cfg: DryCommandConfig = context.getDryCommandConfig();

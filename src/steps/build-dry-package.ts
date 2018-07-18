@@ -9,6 +9,7 @@ import { Logger } from '../logger';
 export class BuildDryPackage extends DryStep {
     private static logger: Logger = Logger.getLogger('dry.BuildDryPackage');
 
+    /** @inheritdoc */
     public execute(context: DryContext): Promise<DryContext> {
         return new Promise<DryContext>((resolve, reject) => {
             BuildDryPackage.logger.debug('Reading dry package from disk');

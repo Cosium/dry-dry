@@ -55,6 +55,10 @@ export class DryCommandConfig {
         this.loadConfig();
     }
 
+    /**
+     * Compute and order the list of dry steps and activated features
+     * @return {DryStep[]} the ordered list of steps and features
+     */
     public getOrderedStepsAndFeatures(): DryStep[] {
         const executionSteps: DryStep[] = this.steps.concat(this.availableFeatures.filter((f) => f.isActive()));
 
@@ -94,6 +98,9 @@ export class DryCommandConfig {
         return this.packagerDescriptor;
     }
 
+    /**
+     * Initialize the list of available features and define their position in the dry lifecycle
+     */
     private initializeAvailableFeatures(): void {
         this.availableFeatures.push(new EnableLogging(DryLifecyclePhase.START));
         this.availableFeatures.push(new EnableLoggingLevel(DryLifecyclePhase.START));
@@ -101,6 +108,9 @@ export class DryCommandConfig {
         this.availableFeatures.push(new SavePackageJson(DryLifecyclePhase.PRE_CLEAN));
     }
 
+    /**
+     * Initialize the list of default steps and define their position in the dry lifecycle
+     */
     private initializeDefaultSteps(): void {
         this.steps.push(new Start(DryLifecyclePhase.START));
         this.steps.push(new BuildDryPackage(DryLifecyclePhase.BUILD_DRY_PACKAGE));
@@ -112,6 +122,10 @@ export class DryCommandConfig {
         this.steps.push(new Finish(DryLifecyclePhase.FINISH));
     }
 
+    /**
+     * Lookup into provided arguments to find the possible custom package manager to use
+     * if not found then loads the default one
+     */
     private loadPackagerDescriptor(unprocessedArgs: string[]): void {
         let packagerPath: string;
         // first find custom packager if any
