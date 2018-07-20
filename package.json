@@ -57,6 +57,7 @@
     "typescript": "2.6.2"
   },
   "dependencies": {
+    "chalk": "2.4.1",
     "deep-diff": "0.3.8",
     "deepmerge": "1.3.2",
     "import-cwd": "2.1.0",

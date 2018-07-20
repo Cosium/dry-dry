@@ -2,6 +2,9 @@ import { JsonObject, JsonProperty } from 'json2typescript';
 import { JsonConverter } from 'json2typescript/src/json2typescript/json-convert-decorators';
 import { JsonCustomConvert } from 'json2typescript/src/json2typescript/json-custom-convert';
 
+/**
+ * Responsible for converting the json map to a Map<string, string[]>
+ */
 @JsonConverter
 class ArgValueMapConverter implements JsonCustomConvert<Map<string, string[]>> {
     // tslint:disable:no-any
